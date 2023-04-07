@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'DnDTools'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B8F521BA463D49698CFD68A26F627EB4 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8F83E9BB42DE4CE6B33B7C999EA727EF }}
           package: .
