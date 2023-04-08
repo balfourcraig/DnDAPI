@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DnDAPI.Extensions;
 using System.Net.Http.Headers;
+using Newtonsoft.Json;
 
 namespace DnDAPI.Controllers
 {
@@ -19,6 +20,8 @@ namespace DnDAPI.Controllers
 
         public record ChatRequest(string Model, ChatMessage[] Messages);
         public record ChatMessage(string Role, string Content);
+        public record ChatResponse(string Id, string Model, ChatChoice[] Choices);
+        public record ChatChoice(ChatMessage Message, int Index);
 
         public LocationController(ILogger<LocationController> logger, IConfiguration configuration)
         {
@@ -40,12 +43,19 @@ namespace DnDAPI.Controllers
             try{
                 var response = await client.PostAsJsonAsync("https://api.openai.com/v1/chat/completions", request);
                 if(response.StatusCode == System.Net.HttpStatusCode.OK){
-                    return Json(response.Content.ReadAsStringAsync().Result);
+                    string content = await response.Content.ReadAsStringAsync() ?? "";
+                    ChatResponse result = JsonConvert.DeserializeObject<ChatResponse>(content);
+                    return Json(
+                        new { 
+                            Response = result.Choices[0].Message.Content,
+                            prompt = house
+                        }
+                    );
                 }
-                return Json("Error " + response.StatusCode.ToString() + ": " + response.Content.ReadAsStringAsync().Result);   
+                return BadRequest("OpenAI API returned " + response.StatusCode.ToString());  
             }
-            catch(Exception e){
-                return Json(e.Message);
+            catch(Exception _){
+                return BadRequest("Error calling API");
             }
         }
 
