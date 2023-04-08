@@ -109,6 +109,11 @@ namespace DnDAPI.Controllers
             "well kept",
             "detailed",
             "decorative",
+            "ornate",
+            "rustic",
+            "rusty",
+            "weathered",
+            "weather-beaten",
         };
 
         private static string[] houseMaterials = new string[] {
@@ -123,6 +128,12 @@ namespace DnDAPI.Controllers
             "wood board",
             "mud brick",
             "adobe",
+            "Yellow sandstone",
+            "brick and mortar",
+            "brick and stone",
+            "brick and wood",
+            "Timber-framed",
+
         };
 
         private static string[] houseTypes = new string[] {
@@ -148,6 +159,15 @@ namespace DnDAPI.Controllers
             "bungalow",
             "homestead",
             "lodge",
+            "residence",
+            "villa",
+            "barn",
+            "barracks",
+            "guildhall",
+            "farmhouse",
+            "hall",
+            "inn",
+            "church",
         };
 
         private static string[] houseSingleFeatures = new string[] {
@@ -158,6 +178,9 @@ namespace DnDAPI.Controllers
             "planter box",
             "entrance",
             "hall",
+            "thatched roof",
+            "chimney",
+            "fireplace",
         };
 
         private static string[] houseMultipleFeatures = new string[] {
@@ -165,11 +188,24 @@ namespace DnDAPI.Controllers
             "eves",
             "doors",
             "fittings",
+            "terracotta roof tiles",
+
         };
 
         private static string[] houseLife = new string[] {
             "smoke rising from the chimney",
             "lit windows",
+            "illuminated windows",
+            "arrow-slit windows",
+            "stained-glass windows",
+            "a doorbell",
+            "a door knocker",
+            "door ajar",
+            "wooden beams",
+            "fortified gates",
+            "a gatehouse",
+            "a drawbridge",
+            "wrought-iron railings"
         };
     }
 }
