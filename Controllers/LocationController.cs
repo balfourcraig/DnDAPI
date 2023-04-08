@@ -25,9 +25,30 @@ namespace DnDAPI.Controllers
         }
 
         [HttpGet(Name = "GetLocationName")]
-        public async Task<IActionResult> Get()
+        [Route("api/Location")]
+        public async Task<IActionResult> Get(string key)
         {
+            if(key != _configuration["userKey"])
+                return BadRequest("Invalid API Key");
+
             string house = BuildHouse();
+
+            return Json(
+                new { 
+                    Response = house,
+                    prompt = ""
+                }
+            );
+        }
+
+        [HttpGet(Name = "GetLocationDescriptions")]
+        [Route("api/LocationDesc")]
+        public async Task<IActionResult> GetDesc(string key, string shortDesc)
+        {
+            if(key != _configuration["userKey"])
+                return BadRequest("Invalid API Key");
+
+            string house = System.Net.WebUtility.UrlDecode(shortDesc);
             var request = new ChatRequest("gpt-3.5-turbo", 
                 new ChatMessage[] { 
                     new ChatMessage("user", "Describe the following house in a short paragraph: " + house) 
