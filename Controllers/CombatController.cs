@@ -29,7 +29,7 @@ namespace DnDAPI.Controllers
             if(key != _configuration["userKey"])
                 return BadRequest("Invalid API Key");
             
-            string prompt = $"Describe a one paragraph spectacular death blow with a {weapon} to a {enemy}.";
+            string prompt = $"You are the DM in a roleplaying game. Give a short but spectacular description for the player of how they deliver the death blow with {weapon.AddArticle()} to {enemy.AddArticle()}.";
             var request = new ChatRequest("gpt-3.5-turbo", 
                 new ChatMessage[] { 
                     new ChatMessage("user", prompt) 
