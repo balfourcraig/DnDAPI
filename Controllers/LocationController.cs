@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DnDAPI.Extensions;
+using System.Net.Http.Headers;
 
 namespace DnDAPI.Controllers
 {
@@ -16,6 +17,9 @@ namespace DnDAPI.Controllers
         private IConfiguration _configuration;
         private static readonly Random r = new Random();
 
+        public record ChatRequest(string Model, ChatMessage[] Messages);
+        public record ChatMessage(string Role, string Content);
+
         public LocationController(ILogger<LocationController> logger, IConfiguration configuration)
         {
             _logger = logger;
@@ -23,10 +27,22 @@ namespace DnDAPI.Controllers
         }
 
         [HttpGet(Name = "GetLocationName")]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            string key1 = _configuration["key1"] ?? "NOT FOUND";
-            return Json(key1 + ": " + BuildHouse());
+            string house = BuildHouse();
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _configuration["OpenAIKey"]);
+            client.DefaultRequestHeaders.Add("Content-Type", "application/json");
+            var request = new ChatRequest("gpt-3.5-turbo", 
+                new ChatMessage[] { 
+                    new ChatMessage("user", "Describe the following house in a short paragraph: " + house) 
+                }
+            );
+            var response = await client.PostAsJsonAsync("https://api.openai.com/v1/chat/completions", request);
+            if(response.StatusCode == System.Net.HttpStatusCode.OK){
+                return Json(response.Content.ReadAsStringAsync().Result);
+            }
+            return Json("Error");
         }
 
         public static string BuildHouse(){
