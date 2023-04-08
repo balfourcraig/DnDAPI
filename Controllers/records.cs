@@ -13,4 +13,17 @@ namespace DnDAPI.Controllers{
     public record ChatMessage(string Role, string Content);
     public record ChatResponse(string Id, string Model, ChatChoice[] Choices);
     public record ChatChoice(ChatMessage Message, int Index);
+
+    public record NPC(
+        string Firstname,
+        string Lastname,
+        char Gender,
+        string Voice,
+        string[] Clothing,
+        string[] Loot,
+        string Doing,
+        string Detail,
+        string Secret,
+        string House
+    );
 }

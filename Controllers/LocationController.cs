@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace DnDAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class LocationController : Controller
     {
@@ -25,8 +25,7 @@ namespace DnDAPI.Controllers
         }
 
         [HttpGet(Name = "GetLocationName")]
-        [Route("api/Location")]
-        public async Task<IActionResult> Get(string key)
+        public async Task<IActionResult> ShortDescription(string key)
         {
             if(key != _configuration["userKey"])
                 return BadRequest("Invalid API Key");
@@ -42,8 +41,7 @@ namespace DnDAPI.Controllers
         }
 
         [HttpGet(Name = "GetLocationDescriptions")]
-        [Route("api/LocationDesc")]
-        public async Task<IActionResult> GetDesc(string key, string shortDesc)
+        public async Task<IActionResult> LongDescription(string key, string shortDesc)
         {
             if(key != _configuration["userKey"])
                 return BadRequest("Invalid API Key");
