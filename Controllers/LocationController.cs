@@ -32,7 +32,6 @@ namespace DnDAPI.Controllers
             string house = BuildHouse();
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _configuration["OpenAIKey"]);
-            client.DefaultRequestHeaders.Add("Content-Type", "application/json");
             var request = new ChatRequest("gpt-3.5-turbo", 
                 new ChatMessage[] { 
                     new ChatMessage("user", "Describe the following house in a short paragraph: " + house) 
