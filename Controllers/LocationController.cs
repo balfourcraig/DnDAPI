@@ -18,11 +18,6 @@ namespace DnDAPI.Controllers
         private IConfiguration _configuration;
         private static readonly Random r = new Random();
 
-        public record ChatRequest(string Model, ChatMessage[] Messages);
-        public record ChatMessage(string Role, string Content);
-        public record ChatResponse(string Id, string Model, ChatChoice[] Choices);
-        public record ChatChoice(ChatMessage Message, int Index);
-
         public LocationController(ILogger<LocationController> logger, IConfiguration configuration)
         {
             _logger = logger;
@@ -33,30 +28,22 @@ namespace DnDAPI.Controllers
         public async Task<IActionResult> Get()
         {
             string house = BuildHouse();
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _configuration["OpenAIKey"]);
             var request = new ChatRequest("gpt-3.5-turbo", 
                 new ChatMessage[] { 
                     new ChatMessage("user", "Describe the following house in a short paragraph: " + house) 
                 }
             );
-            try{
-                var response = await client.PostAsJsonAsync("https://api.openai.com/v1/chat/completions", request);
-                if(response.StatusCode == System.Net.HttpStatusCode.OK){
-                    string content = await response.Content.ReadAsStringAsync() ?? "";
-                    ChatResponse result = JsonConvert.DeserializeObject<ChatResponse>(content);
-                    return Json(
-                        new { 
-                            Response = result.Choices[0].Message.Content,
-                            prompt = house
-                        }
-                    );
-                }
-                return BadRequest("OpenAI API returned " + response.StatusCode.ToString());  
+            ChatResponse? resonse = await Utils.GetGPTResponseAsync(request, _configuration["OpenAIKey"]);
+            if(resonse != null){
+                return Json(
+                    new { 
+                        Response = resonse.Choices[0].Message.Content,
+                        prompt = house
+                    }
+                );
             }
-            catch(Exception _){
-                return BadRequest("Error calling API");
-            }
+            return BadRequest("OpenAI API returned an error");  
+
         }
 
         public static string BuildHouse(){
