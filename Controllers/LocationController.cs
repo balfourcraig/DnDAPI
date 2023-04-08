@@ -10,25 +10,28 @@ namespace DnDAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LocationController : ControllerBase
+    public class LocationController : Controller
     {
         private readonly ILogger<LocationController> _logger;
+        private IConfiguration _configuration;
         private static readonly Random r = new Random();
 
-        public LocationController(ILogger<LocationController> logger)
+        public LocationController(ILogger<LocationController> logger, IConfiguration configuration)
         {
             _logger = logger;
+            _configuration = configuration;
         }
 
         [HttpGet(Name = "GetLocationName")]
-        public string Get()
+        public IActionResult Get()
         {
-            return BuildHouse();
+            string key1 = _configuration["key1"] ?? "NOT FOUND";
+            return Json(key1 + ": " + BuildHouse());
         }
 
         public static string BuildHouse(){
             string h = "";
-            h += houseDescriptions.Random().Capitalize().AddArticle() + " ";
+            h += houseDescriptions.Random().AddArticle().Capitalize() + " ";
             if(r.NextDouble() < 0.2){
                 h += houseMaterials.Random() + " ";
             }
