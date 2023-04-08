@@ -38,11 +38,16 @@ namespace DnDAPI.Controllers
                     new ChatMessage("user", "Describe the following house in a short paragraph: " + house) 
                 }
             );
-            var response = await client.PostAsJsonAsync("https://api.openai.com/v1/chat/completions", request);
-            if(response.StatusCode == System.Net.HttpStatusCode.OK){
-                return Json(response.Content.ReadAsStringAsync().Result);
+            try{
+                var response = await client.PostAsJsonAsync("https://api.openai.com/v1/chat/completions", request);
+                if(response.StatusCode == System.Net.HttpStatusCode.OK){
+                    return Json(response.Content.ReadAsStringAsync().Result);
+                }
+                return Json("Error " + response.StatusCode.ToString() + ": " + response.Content.ReadAsStringAsync().Result);   
             }
-            return Json("Error");
+            catch(Exception e){
+                return Json(e.Message);
+            }
         }
 
         public static string BuildHouse(){
