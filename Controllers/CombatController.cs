@@ -25,19 +25,14 @@ namespace DnDAPI.Controllers
         }
 
         [HttpGet(Name = "Combat")]
-        public async Task<IActionResult> Get(string key, string weapon, string enemy, string? theme = null, int sentences = 1){
+        public async Task<IActionResult> Get(string key, string weapon, string enemy, string? theme = null, string? style = null, int sentences = 1){
             if(key != _configuration["userKey"])
                 return BadRequest("Invalid API Key");
             
             sentences = Math.Min(sentences, 5);
             sentences = Math.Max(1, sentences);
-            string prompt = $"You are the DM in a {(string.IsNullOrWhiteSpace(theme) ? "" : theme + " ")}roleplaying game. Give a short ({sentences} sentence max) but spectacular description for the player of how they deliver the death blow with {weapon.AddArticle()} to {enemy.AddArticle()}.";
-            var request = new ChatRequest( 
-                new ChatMessage[] { 
-                    new ChatMessage("user", prompt) 
-                }
-            );
-            ChatResponse? resonse = await Utils.GetGPTResponseAsync(request, _configuration["OpenAIKey"]);
+            string prompt = $"You are the DM in a {(string.IsNullOrWhiteSpace(theme) ? "" : theme + " ")}roleplaying game. Give a short ({sentences} sentence max) {(style == null ? "" : style)} description for the player of how they deliver the death blow with {weapon.AddArticle()} to {enemy.AddArticle()}.";
+            ChatResponse? resonse = await Utils.GetGPTResponseAsync(prompt, _configuration["OpenAIKey"]);
             if(resonse != null){
                 return Json(
                     new { 

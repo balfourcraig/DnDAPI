@@ -32,7 +32,7 @@ namespace DnDAPI.Controllers
             if(person == null)
                 return BadRequest("Invalid NPC object");
             string description = await GetNPCDescription(person, sentences, _configuration["OpenAIKey"]);
-            return Ok();
+            return Ok(description);
         }
 
         [HttpPost(Name = "Post_NPCImage")]
