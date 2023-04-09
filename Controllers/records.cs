@@ -18,18 +18,18 @@ namespace DnDAPI.Controllers{
     public record DALLEImageResponse(int created, DALLEImage[] Data);
     public record DALLEImage(string Url);
 
-    public record NPC(
-        string Firstname,
-        string Lastname,
-        char Gender,
-        string Voice,
-        string[] Clothing,
-        string[] Loot,
-        string Doing,
-        string Detail,
-        string Secret,
-        string House,
-        string? Description = null,
-        string? ImageURL = null
-    );
+    public class NPC{
+        public string Firstname {get; set;}
+        public string Lastname {get; set;}
+        public char Gender {get; set;}
+        public string Voice {get; set;}
+        public string[] Clothing {get; set;}
+        public string[] Loot {get; set;}
+        public string Doing {get; set;}
+        public string Flavor {get; set;}
+        public string Secret {get; set;}
+        public string House {get; set;}
+        public string? Description  {get; set;} = null;
+        public string? ImageURL  {get; set;} = null;
+    }
 }

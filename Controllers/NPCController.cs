@@ -73,8 +73,8 @@ namespace DnDAPI.Controllers
                 prompt += $", {pronoun1} is carrying {person.Loot.JoinList()}, though some of that may be hidden.";
             if(!string.IsNullOrWhiteSpace(person.Doing))
                 prompt += $", {pronoun1} is {person.Doing}";
-            if(!string.IsNullOrWhiteSpace(person.Detail))
-                prompt += $", a little detail about {pronoun3} is {pronoun1} is {person.Detail}";
+            if(!string.IsNullOrWhiteSpace(person.Flavor))
+                prompt += $", a little detail about {pronoun3} is {pronoun1} is {person.Flavor}";
             if(!string.IsNullOrWhiteSpace(person.Secret))
                 prompt += $", a secret about {pronoun3} is {pronoun1}: {person.Secret}, which should not be in the description but may influence it subtly.";
             prompt += "You do not need to use all this information, only enough to describe the person well.";
