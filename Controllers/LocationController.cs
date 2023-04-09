@@ -41,15 +41,19 @@ namespace DnDAPI.Controllers
         }
 
         [HttpGet(Name = "GetLocationDescriptions")]
-        public async Task<IActionResult> LongDescription(string key, string shortDesc)
+        public async Task<IActionResult> LongDescription(string key, string shortDesc, string theme = null, int sentences = 1)
         {
             if(key != _configuration["userKey"])
                 return BadRequest("Invalid API Key");
 
+            sentences = Math.Min(5, sentences);
+            sentences = Math.Max(1, sentences);
             string house = System.Net.WebUtility.UrlDecode(shortDesc);
-            var request = new ChatRequest("gpt-3.5-turbo", 
+            var request = new ChatRequest( 
                 new ChatMessage[] { 
-                    new ChatMessage("user", "Describe the following house in a short paragraph: " + house) 
+                    new ChatMessage("user", $"Describe the following house in a short ({sentences} sentence max) paragraph: " 
+                    + house
+                    + $".{(string.IsNullOrWhiteSpace(theme) ? "" : $" The house is in a {theme} setting.")}")
                 }
             );
             ChatResponse? resonse = await Utils.GetGPTResponseAsync(request, _configuration["OpenAIKey"]);

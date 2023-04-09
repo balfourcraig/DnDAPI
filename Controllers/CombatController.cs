@@ -25,12 +25,14 @@ namespace DnDAPI.Controllers
         }
 
         [HttpGet(Name = "Combat")]
-        public async Task<IActionResult> Get(string key, string weapon, string enemy){
+        public async Task<IActionResult> Get(string key, string weapon, string enemy, string? theme = null, int sentences = 1){
             if(key != _configuration["userKey"])
                 return BadRequest("Invalid API Key");
             
-            string prompt = $"You are the DM in a roleplaying game. Give a short but spectacular description for the player of how they deliver the death blow with {weapon.AddArticle()} to {enemy.AddArticle()}.";
-            var request = new ChatRequest("gpt-3.5-turbo", 
+            sentences = Math.Min(sentences, 5);
+            sentences = Math.Max(1, sentences);
+            string prompt = $"You are the DM in a {(string.IsNullOrWhiteSpace(theme) ? "" : theme + " ")}roleplaying game. Give a short ({sentences} sentence max) but spectacular description for the player of how they deliver the death blow with {weapon.AddArticle()} to {enemy.AddArticle()}.";
+            var request = new ChatRequest( 
                 new ChatMessage[] { 
                     new ChatMessage("user", prompt) 
                 }

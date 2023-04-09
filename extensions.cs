@@ -10,6 +10,15 @@ namespace DnDAPI.Extensions
         {
             return array[Shared.Next(array.Length)];
         }
+
+        public static string JoinList(this string[] array){
+            if(array.Length == 1)
+                return array[0];
+            else if(array.Length == 2)
+                return $"{array[0]} and {array[1]}";
+            else
+                return $"{string.Join(", ", array[..^1])}, and {array[^1]}";
+        }
     }
 
     public static class StringExtensions
