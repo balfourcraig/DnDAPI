@@ -32,7 +32,7 @@ namespace DnDAPI.Controllers
             sentences = Math.Min(sentences, 5);
             sentences = Math.Max(1, sentences);
             string prompt = $"You are the DM in a {(string.IsNullOrWhiteSpace(theme) ? "" : theme + " ")}roleplaying game. Give a short ({sentences} sentence max) {(style == null ? "" : style)} description for the player of how they deliver the death blow with {weapon.AddArticle()} to {enemy.AddArticle()}.";
-            ChatResponse? resonse = await Utils.GetGPTResponseAsync(prompt, _configuration["OpenAIKey"]);
+            ChatResponse? resonse = await Utils.GetGPTResponseAsync(prompt, _configuration?["OpenAIKey"] ?? "");
             if(resonse != null){
                 return Json(
                     new { 

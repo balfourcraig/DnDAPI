@@ -25,7 +25,7 @@ namespace DnDAPI.Controllers
         }
 
         [HttpGet(Name = "GetLocationName")]
-        public async Task<IActionResult> ShortDescription(string key)
+        public IActionResult ShortDescription(string key)
         {
             if(key != _configuration["userKey"])
                 return BadRequest("Invalid API Key");
@@ -41,7 +41,7 @@ namespace DnDAPI.Controllers
         }
 
         [HttpGet(Name = "GetLocationDescriptions")]
-        public async Task<IActionResult> LongDescription(string key, string shortDesc, string theme = null, int sentences = 1)
+        public async Task<IActionResult> LongDescription(string key, string shortDesc, string? theme = null, int sentences = 1)
         {
             if(key != _configuration["userKey"])
                 return BadRequest("Invalid API Key");
@@ -56,7 +56,7 @@ namespace DnDAPI.Controllers
                     + $".{(string.IsNullOrWhiteSpace(theme) ? "" : $" The house is in a {theme} setting.")}")
                 }
             );
-            ChatResponse? resonse = await Utils.GetGPTResponseAsync(request, _configuration["OpenAIKey"]);
+            ChatResponse? resonse = await Utils.GetGPTResponseAsync(request, _configuration?["OpenAIKey"] ?? "");
             if(resonse != null){
                 return Json(
                     new { 
@@ -66,7 +66,26 @@ namespace DnDAPI.Controllers
                 );
             }
             return BadRequest("OpenAI API returned an error");  
+        }
 
+        [HttpGet(Name = "Post_LocationImage")]
+        public async Task<IActionResult> Image(string key, string? prompt)
+        {
+            if(key != _configuration["userKey"])
+                return BadRequest("Invalid API Key");
+            if(prompt == null)
+                return BadRequest("No prompt");
+
+            string promptStart = "beautiful painting of ";
+            string promptEnd = " by greg rutkowski and magali villanueve";
+            if(prompt.EndsWith('.'))
+                prompt = prompt.Substring(0, prompt.Length - 1);
+            prompt = promptStart + prompt + promptEnd;
+            DALLEImageResponse? image = await Utils.GetDALLEImageAsync(prompt, _configuration?["OpenAIKey"] ?? "");
+            if(image != null){
+                return Json(image.Data[0].Url);
+            }
+            return BadRequest("OpenAI API returned an error");
         }
 
         public static string BuildHouse(){

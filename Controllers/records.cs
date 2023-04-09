@@ -19,17 +19,18 @@ namespace DnDAPI.Controllers{
     public record DALLEImage(string Url);
 
     public class NPC{
-        public string Firstname {get; set;}
-        public string Lastname {get; set;}
-        public string Gender {get; set;}
-        public string Voice {get; set;}
-        public string Clothing {get; set;}
-        public string Loot {get; set;}
-        public string Action {get; set;}
-        public string Flavor {get; set;}
-        public string Secret {get; set;}
-        public string House {get; set;}
+        public string Firstname {get; set;} = string.Empty;
+        public string Lastname {get; set;} = string.Empty;
+        public string Gender {get; set;} = string.Empty;
+        public string Voice {get; set;} = string.Empty;
+        public string Clothing {get; set;} = string.Empty;
+        public string Loot {get; set;} = string.Empty;
+        public string Action {get; set;} = string.Empty;
+        public string Flavor {get; set;} = string.Empty;
+        public string Secret {get; set;} = string.Empty;
+        public string House {get; set;} = string.Empty;
         public string? Description  {get; set;} = null;
         public string? ImageURL  {get; set;} = null;
+        public string? ImagePrompt { get; set; } = null;
     }
 }
