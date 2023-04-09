@@ -23,6 +23,9 @@ namespace DnDAPI.Extensions
 
     public static class StringExtensions
     {
+
+        public static string FormatLineBreakList(this string s) => s.Split("\n").JoinList();
+
 //capitalize
         public static string Capitalize(this string s)
         {

@@ -67,10 +67,10 @@ namespace DnDAPI.Controllers
                 prompt += $" {person.Lastname}";
             if(!string.IsNullOrWhiteSpace(person.Voice))
                 prompt += $", {pronoun1} voice feature is {person.Voice.AddArticle()}";
-            if(person.Clothing != null && person.Clothing.Length > 0)
-                prompt += $", {pronoun1} is wearing {person.Clothing.JoinList()}";
-            if(person.Loot != null && person.Loot.Length > 0)
-                prompt += $", {pronoun1} is carrying {person.Loot.JoinList()}, though some of that may be hidden.";
+            if(!string.IsNullOrWhiteSpace(person.Clothing))
+                prompt += $", {pronoun1} is wearing {person.Clothing.FormatLineBreakList()}";
+            if(!string.IsNullOrWhiteSpace(person.Loot))
+                prompt += $", {pronoun1} is carrying {person.Loot.FormatLineBreakList()}, though some of that may be hidden.";
             if(!string.IsNullOrWhiteSpace(person.Action))
                 prompt += $", {pronoun1} is {person.Action}";
             if(!string.IsNullOrWhiteSpace(person.Flavor))

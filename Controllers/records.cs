@@ -23,8 +23,8 @@ namespace DnDAPI.Controllers{
         public string Lastname {get; set;}
         public string Gender {get; set;}
         public string Voice {get; set;}
-        public string[] Clothing {get; set;}
-        public string[] Loot {get; set;}
+        public string Clothing {get; set;}
+        public string Loot {get; set;}
         public string Action {get; set;}
         public string Flavor {get; set;}
         public string Secret {get; set;}
