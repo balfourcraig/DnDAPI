@@ -58,9 +58,9 @@ namespace DnDAPI.Controllers
         private static async Task<string> GetNPCDescription(NPC person, int sentences, string key){
             sentences = Math.Min(5, Math.Max(1, sentences));
             string prompt = "Describe the following person in a short paragraph: ";
-            string pronoun1 = person.Gender == 'M' ? "he" : "she";
-            string pronoun2 = person.Gender == 'M' ? "his" : "her";
-            string pronoun3 = person.Gender == 'M' ? "him" : "her";
+            string pronoun1 = person.Gender == "M" ? "he" : "she";
+            string pronoun2 = person.Gender == "M" ? "his" : "her";
+            string pronoun3 = person.Gender == "M" ? "him" : "her";
             if(!string.IsNullOrWhiteSpace(person.Firstname))
                 prompt += $"{pronoun2} name is {person.Firstname}";
             if(!string.IsNullOrWhiteSpace(person.Lastname))
@@ -71,8 +71,8 @@ namespace DnDAPI.Controllers
                 prompt += $", {pronoun1} is wearing {person.Clothing.JoinList()}";
             if(person.Loot != null && person.Loot.Length > 0)
                 prompt += $", {pronoun1} is carrying {person.Loot.JoinList()}, though some of that may be hidden.";
-            if(!string.IsNullOrWhiteSpace(person.Doing))
-                prompt += $", {pronoun1} is {person.Doing}";
+            if(!string.IsNullOrWhiteSpace(person.Action))
+                prompt += $", {pronoun1} is {person.Action}";
             if(!string.IsNullOrWhiteSpace(person.Flavor))
                 prompt += $", a little detail about {pronoun3} is {pronoun1} is {person.Flavor}";
             if(!string.IsNullOrWhiteSpace(person.Secret))
