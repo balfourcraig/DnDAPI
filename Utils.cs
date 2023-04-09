@@ -19,12 +19,13 @@ namespace DnDAPI
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public static async Task<ChatResponse?> GetGPTResponseAsync(string prompt, string key)
+        public static async Task<ChatResponse?> GetGPTResponseAsync(string prompt, string key, string model = "gpt-3.5-turbo")
         {
             var request = new ChatRequest(
                 new ChatMessage[] {
                     new ChatMessage("user", prompt)
-                }
+                },
+                model
             );
             return await GetGPTResponseAsync(request, key);
         }

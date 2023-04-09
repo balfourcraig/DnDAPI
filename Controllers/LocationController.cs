@@ -49,14 +49,11 @@ namespace DnDAPI.Controllers
             sentences = Math.Min(5, sentences);
             sentences = Math.Max(1, sentences);
             string house = System.Net.WebUtility.UrlDecode(shortDesc);
-            var request = new ChatRequest( 
-                new ChatMessage[] { 
-                    new ChatMessage("user", $"Describe the following house in a short ({sentences} sentence max) paragraph: " 
-                    + house
-                    + $".{(string.IsNullOrWhiteSpace(theme) ? "" : $" The house is in a {theme} setting.")}")
-                }
-            );
-            ChatResponse? resonse = await Utils.GetGPTResponseAsync(request, _configuration?["OpenAIKey"] ?? "");
+            string prompt = $"Describe the following house in a short ({sentences} sentence max) paragraph: " 
+                + house
+                + $".{(string.IsNullOrWhiteSpace(theme) ? "" : $" The house is in a {theme} setting.")}";
+
+            ChatResponse? resonse = await Utils.GetGPTResponseAsync(prompt, _configuration?["OpenAIKey"] ?? "");
             if(resonse != null){
                 return Json(
                     new { 
@@ -69,18 +66,19 @@ namespace DnDAPI.Controllers
         }
 
         [HttpGet(Name = "Post_LocationImage")]
-        public async Task<IActionResult> Image(string key, string? prompt)
+        public async Task<IActionResult> Image(string key, string? prompt, string? theme = null)
         {
             if(key != _configuration["userKey"])
                 return BadRequest("Invalid API Key");
             if(prompt == null)
                 return BadRequest("No prompt");
 
+            theme = string.IsNullOrWhiteSpace(theme) ? "" : $" in a {theme} setting";
             string promptStart = "beautiful painting of ";
             string promptEnd = " by greg rutkowski and magali villanueve";
             if(prompt.EndsWith('.'))
                 prompt = prompt.Substring(0, prompt.Length - 1);
-            prompt = promptStart + prompt + promptEnd;
+            prompt = promptStart + prompt + theme + promptEnd;
             DALLEImageResponse? image = await Utils.GetDALLEImageAsync(prompt, _configuration?["OpenAIKey"] ?? "");
             if(image != null){
                 return Json(image.Data[0].Url);
