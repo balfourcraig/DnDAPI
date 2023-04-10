@@ -33,4 +33,18 @@ namespace DnDAPI.Controllers{
         public string? ImageURL  {get; set;} = null;
         public string? ImagePrompt { get; set; } = null;
     }
+
+    public class Quest{
+        public string Title { get; set; } = string.Empty;
+        public string Mission { get; set; } = string.Empty;
+        public string? Description { get; set; } = null;
+        public string Hook { get; set; } = string.Empty;
+        public string Antagonist { get; set; } = string.Empty;
+        public string Ally { get; set; } = string.Empty;
+        public string Complication { get; set; } = string.Empty;
+        public string Obstacle { get; set; } = string.Empty;
+        public string Twist { get; set; } = string.Empty;
+        public string Reward { get; set; } = string.Empty;
+        public string? Theme { get; set; } = null;
+    }
 }
