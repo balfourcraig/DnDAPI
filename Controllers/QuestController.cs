@@ -37,9 +37,8 @@ namespace DnDAPI.Controllers
         }
 
         private static async Task<string> GetQuestDescription(Quest quest, int sentences, string key){
-            sentences = Math.Min(5, Math.Max(1, sentences));
-            string prompt = $"Give a summary ({sentences} sentences max) of the following quest for a roleplaying game: ";
-            prompt += $"The quest is called {quest.Title}. ";
+            string prompt = $"Give a {sentences} sentence summary/description of the following quest for a {(string.IsNullOrWhiteSpace(quest.Theme) ? "" : $"{quest.Theme} themed ")}roleplaying game: ";
+            prompt += $"The quest is called: '{quest.Title}'. ";
             prompt += $"The mission is: {quest.Mission}. ";
             prompt += $"The story hook is: {quest.Hook}. ";
             prompt += $"The antagonist is: {quest.Antagonist}. ";
@@ -48,9 +47,7 @@ namespace DnDAPI.Controllers
             prompt += $"The obstacle to overcome is: {quest.Obstacle}. ";
             prompt += $"The twist is: {quest.Twist}. ";
             prompt += $"On completion the party will receive: {quest.Reward}. ";
-            if(!string.IsNullOrWhiteSpace(quest.Theme))
-                prompt += $"The campaign setting is: {quest.Theme}. ";
-            prompt += "Describe the quest in an exciting way that will make players want to play it.";
+            prompt += "Describe the quest in an exciting way that will make players want to play it!";
 
             ChatResponse? resonse = await Utils.GetGPTResponseAsync(prompt, key);
             if(resonse != null)
