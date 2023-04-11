@@ -53,17 +53,17 @@ namespace DnDAPI.Controllers
         }
 
         private static string GetQuestImagePrompt(Quest quest){
-            string prompt = $"Dramatic cover art of the following quest for a {(string.IsNullOrWhiteSpace(quest.Theme) ? "" : $"{quest.Theme} themed ")}roleplaying game: ";
+            string prompt = $"Dramatic painting of the following quest for a {(string.IsNullOrWhiteSpace(quest.Theme) ? "" : $"{quest.Theme} themed ")} game: ";
             prompt += $"The quest is called: '{quest.Title}'. ";
             prompt += $"The mission is: {quest.Mission}. ";
-            prompt += $"The story hook is: {quest.Hook}. ";
+            //prompt += $"The story hook is: {quest.Hook}. ";
             prompt += $"The antagonist is: {quest.Antagonist}. ";
-            prompt += $"A potential ally is: {quest.Ally}. ";
-            prompt += $"The complication is: {quest.Complication}. ";
-            prompt += $"The obstacle to overcome is: {quest.Obstacle}. ";
-            prompt += $"The twist is: {quest.Twist}. ";
-            prompt += $"On completion the party will receive: {quest.Reward}. ";
-            prompt += "Beautiful painting in the style of Frank Frazetta or Boris Vallejo.";
+            //prompt += $"A potential ally is: {quest.Ally}. ";
+            //prompt += $"The complication is: {quest.Complication}. ";
+            // prompt += $"The obstacle to overcome is: {quest.Obstacle}. ";
+            // prompt += $"The twist is: {quest.Twist}. ";
+            // prompt += $"On completion the party will receive: {quest.Reward}. ";
+            prompt += "Beautiful painting in the style of Frank Frazetta or Boris Vallejo, digital art";
             return prompt;
         }
 
