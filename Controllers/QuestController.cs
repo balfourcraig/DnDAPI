@@ -36,6 +36,37 @@ namespace DnDAPI.Controllers
             return Json(quest);
         }
 
+        [HttpPost(Name = "Post_QuestImage")]
+        public async Task<IActionResult> Image(string key, [FromBody] Quest quest)
+        {
+            if(key != _configuration["userKey"])
+                return BadRequest("Invalid API Key");
+            if(quest == null)
+                return BadRequest("Invalid quest object");
+
+            string prompt = GetQuestImagePrompt(quest);
+            DALLEImageResponse? image = await Utils.GetDALLEImageAsync(prompt, _configuration?["OpenAIKey"] ?? "");
+            if(image != null){
+                return Json(image.Data[0].Url);
+            }
+            return BadRequest("No image found");
+        }
+
+        private static string GetQuestImagePrompt(Quest quest){
+            string prompt = $"Dramatic cover art of the following quest for a {(string.IsNullOrWhiteSpace(quest.Theme) ? "" : $"{quest.Theme} themed ")}roleplaying game: ";
+            prompt += $"The quest is called: '{quest.Title}'. ";
+            prompt += $"The mission is: {quest.Mission}. ";
+            prompt += $"The story hook is: {quest.Hook}. ";
+            prompt += $"The antagonist is: {quest.Antagonist}. ";
+            prompt += $"A potential ally is: {quest.Ally}. ";
+            prompt += $"The complication is: {quest.Complication}. ";
+            prompt += $"The obstacle to overcome is: {quest.Obstacle}. ";
+            prompt += $"The twist is: {quest.Twist}. ";
+            prompt += $"On completion the party will receive: {quest.Reward}. ";
+            prompt += "Beautiful painting in the style of Frank Frazetta or Boris Vallejo.";
+            return prompt;
+        }
+
         private static async Task<string> GetQuestDescription(Quest quest, int sentences, string key){
             string prompt = $"Give a {sentences} sentence summary/description of the following quest for a {(string.IsNullOrWhiteSpace(quest.Theme) ? "" : $"{quest.Theme} themed ")}roleplaying game: ";
             prompt += $"The quest is called: '{quest.Title}'. ";
