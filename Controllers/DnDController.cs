@@ -24,7 +24,7 @@ namespace DnDAPI.Controllers
             _configuration = configuration;
         }
 
-        [HttpGet(Name = "GetLocationName")]
+        [HttpGet(Name = "GetDescriptionByPrompt")]
         public async Task<IActionResult> ShortDescription(string key, string prompt)
         {
             if(key != _configuration["userKey"])
@@ -40,7 +40,7 @@ namespace DnDAPI.Controllers
             return BadRequest("OpenAI API returned an error");
         }
 
-        [HttpGet(Name = "Post_AnyImage")]
+        [HttpGet(Name = "Get_AnyImage")]
         public async Task<IActionResult> Image(string key, string? prompt, string? theme = null)
         {
             if(key != _configuration["userKey"])
