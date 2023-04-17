@@ -25,10 +25,13 @@ namespace DnDAPI.Controllers
         }
 
         [HttpPost(Name = "Post_NPCDescription")]
-        public async Task<IActionResult> LongDescription(string key, [FromBody] NPC person, int sentences = 1)
+        public async Task<IActionResult> LongDescription([FromBody] NPC person, int sentences = 1)
         {
-            if(key != _configuration["userKey"])
-                return BadRequest("Invalid API Key");
+            string? userKey = Request.Cookies["userKey"];
+            if(userKey == null || userKey != _configuration?["UserKey"]){
+                await Task.Delay(1000);
+                return Unauthorized("Invalid user key");
+            }
             if(person == null)
                 return BadRequest("Invalid NPC object");
             string description = await GetNPCDescription(person, sentences, _configuration?["OpenAIKey"] ?? "");
@@ -37,10 +40,13 @@ namespace DnDAPI.Controllers
         }
 
         [HttpPost(Name = "Post_NPCImage")]
-        public async Task<IActionResult> Image(string key, [FromBody] NPC person)
+        public async Task<IActionResult> Image([FromBody] NPC person)
         {
-            if(key != _configuration["userKey"])
-                return BadRequest("Invalid API Key");
+            string? userKey = Request.Cookies["userKey"];
+            if(userKey == null || userKey != _configuration?["UserKey"]){
+                await Task.Delay(1000);
+                return Unauthorized("Invalid user key");
+            }
             if(person == null)
                 return BadRequest("Invalid NPC object");
 

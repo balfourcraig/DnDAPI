@@ -25,10 +25,13 @@ namespace DnDAPI.Controllers
         }
 
         [HttpPost(Name = "Post_QuestDescription")]
-        public async Task<IActionResult> LongDescription(string key, [FromBody] Quest quest, int sentences = 1)
+        public async Task<IActionResult> LongDescription([FromBody] Quest quest, int sentences = 1)
         {
-            if(key != _configuration["userKey"])
-                return BadRequest("Invalid API Key");
+            string? userKey = Request.Cookies["userKey"];
+            if(userKey == null || userKey != _configuration?["UserKey"]){
+                await Task.Delay(1000);
+                return Unauthorized("Invalid user key");
+            }
             if(quest == null)
                 return BadRequest("Invalid QUest object");
             string description = await GetQuestDescription(quest, sentences, _configuration?["OpenAIKey"] ?? "");
@@ -37,10 +40,13 @@ namespace DnDAPI.Controllers
         }
 
         [HttpPost(Name = "Post_QuestImage")]
-        public async Task<IActionResult> Image(string key, [FromBody] Quest quest)
+        public async Task<IActionResult> Image([FromBody] Quest quest)
         {
-            if(key != _configuration["userKey"])
-                return BadRequest("Invalid API Key");
+            string? userKey = Request.Cookies["userKey"];
+            if(userKey == null || userKey != _configuration?["UserKey"]){
+                await Task.Delay(1000);
+                return Unauthorized("Invalid user key");
+            }
             if(quest == null)
                 return BadRequest("Invalid quest object");
 

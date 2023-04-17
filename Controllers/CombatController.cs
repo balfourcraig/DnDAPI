@@ -25,10 +25,13 @@ namespace DnDAPI.Controllers
         }
 
         [HttpGet(Name = "Combat")]
-        public async Task<IActionResult> Get(string key, string weapon, string enemy, string? theme = null, string? style = null, int sentences = 1){
-            if(key != _configuration["userKey"])
-                return BadRequest("Invalid API Key");
-            
+        public async Task<IActionResult> Get(string weapon, string enemy, string? theme = null, string? style = null, int sentences = 1){
+            string? userKey = Request.Cookies["userKey"];
+            if(userKey == null || userKey != _configuration?["UserKey"]){
+                await Task.Delay(1000);
+                return Unauthorized("Invalid user key");
+            }
+
             sentences = Math.Min(sentences, 5);
             sentences = Math.Max(1, sentences);
             string prompt = $"You are the DM in a {(string.IsNullOrWhiteSpace(theme) ? "" : theme + " ")}roleplaying game. Give a short ({sentences} sentence max) {(style == null ? "" : style)} description for the player of how they deliver the death blow with {weapon.AddArticle()} to {enemy.AddArticle()}.";

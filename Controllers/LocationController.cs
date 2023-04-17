@@ -25,10 +25,13 @@ namespace DnDAPI.Controllers
         }
 
         [HttpGet(Name = "GetLocationName")]
-        public IActionResult ShortDescription(string key)
+        public async Task<IActionResult> ShortDescription()
         {
-            if(key != _configuration["userKey"])
-                return BadRequest("Invalid API Key");
+            string? userKey = Request.Cookies["userKey"];
+            if(userKey == null || userKey != _configuration?["UserKey"]){
+                await Task.Delay(1000);
+                return Unauthorized("Invalid user key");
+            }
 
             string house = BuildHouse();
 
@@ -41,10 +44,13 @@ namespace DnDAPI.Controllers
         }
 
         [HttpGet(Name = "GetLocationDescriptions")]
-        public async Task<IActionResult> LongDescription(string key, string shortDesc, string? theme = null, int sentences = 1)
+        public async Task<IActionResult> LongDescription(string shortDesc, string? theme = null, int sentences = 1)
         {
-            if(key != _configuration["userKey"])
-                return BadRequest("Invalid API Key");
+            string? userKey = Request.Cookies["userKey"];
+            if(userKey == null || userKey != _configuration?["UserKey"]){
+                await Task.Delay(1000);
+                return Unauthorized("Invalid user key");
+            }
 
             sentences = Math.Min(5, sentences);
             sentences = Math.Max(1, sentences);
@@ -66,10 +72,13 @@ namespace DnDAPI.Controllers
         }
 
         [HttpGet(Name = "Post_LocationImage")]
-        public async Task<IActionResult> Image(string key, string? prompt, string? theme = null)
+        public async Task<IActionResult> Image(string? prompt, string? theme = null)
         {
-            if(key != _configuration["userKey"])
-                return BadRequest("Invalid API Key");
+            string? userKey = Request.Cookies["userKey"];
+            if(userKey == null || userKey != _configuration?["UserKey"]){
+                await Task.Delay(1000);
+                return Unauthorized("Invalid user key");
+            }
             if(prompt == null)
                 return BadRequest("No prompt");
 

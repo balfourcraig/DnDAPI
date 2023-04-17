@@ -8,9 +8,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(
     options => options.AddDefaultPolicy(
-        builder => builder.WithOrigins("https://balfourcraig.github.io", "file://")
+        builder => builder.WithOrigins("https://balfourcraig.github.io", "http://localhost:5500")
         .AllowAnyHeader()
         .AllowAnyMethod()
+        .AllowCredentials()
     )
 );
 var app = builder.Build();
@@ -29,8 +30,9 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.UseCors(
-    builder => builder.WithOrigins("https://balfourcraig.github.io", "file://")
+    builder => builder.WithOrigins("https://balfourcraig.github.io", "http://localhost:5500")
     .AllowAnyHeader()
     .AllowAnyMethod()
+    .AllowCredentials()
     );
 app.Run();

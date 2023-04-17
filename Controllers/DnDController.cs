@@ -25,10 +25,13 @@ namespace DnDAPI.Controllers
         }
 
         [HttpGet(Name = "GetDescriptionByPrompt")]
-        public async Task<IActionResult> ShortDescription(string key, string prompt)
+        public async Task<IActionResult> ShortDescription(string prompt)
         {
-            if(key != _configuration["userKey"])
-                return BadRequest("Invalid API Key");
+            string? userKey = Request.Cookies["userKey"];
+            if(userKey == null || userKey != _configuration?["UserKey"]){
+                await Task.Delay(1000);
+                return Unauthorized("Invalid user key");
+            }
             try{
                 ChatResponse? response = await Utils.GetGPTResponseAsync(prompt, _configuration?["OpenAIKey"] ?? "");
                 if(response != null)
@@ -41,10 +44,13 @@ namespace DnDAPI.Controllers
         }
 
         [HttpGet(Name = "Get_AnyImage")]
-        public async Task<IActionResult> Image(string key, string? prompt, string? theme = null)
+        public async Task<IActionResult> Image(string? prompt, string? theme = null)
         {
-            if(key != _configuration["userKey"])
-                return BadRequest("Invalid API Key");
+            string? userKey = Request.Cookies["userKey"];
+            if(userKey == null || userKey != _configuration?["UserKey"]){
+                await Task.Delay(1000);
+                return Unauthorized("Invalid user key");
+            }
             if(prompt == null)
                 return BadRequest("No prompt");
 
