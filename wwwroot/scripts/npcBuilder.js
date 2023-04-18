@@ -49,6 +49,13 @@ function generateLoot(){
 }
 
 function appendCharacter(c){
+	if(person){
+		if(person.imageURL && !c.imageURL)
+			c.imageURL = person.imageURL;
+		if(person.description && !c.description)
+			c.description = person.description;
+	}
+
 	const charBlock = document.createElement('div');
 	charBlock.setAttribute('class','charBlock');
 
@@ -59,6 +66,14 @@ function appendCharacter(c){
 	const imgBtn = document.createElement('button');
 	picHolder.appendChild(imgBtn);
 	picHolder.appendChild(profileHolder);
+	imgBtn.addEventListener('click', () => {
+		profileHolder.innerHTML = 'Loading...';
+		imgBtn.style.display = 'none';
+		const address = apiAddress + `/api/NPC/Image`;
+		makePostRequest(address, JSON.stringify(c), (data) => {
+			appendCharacter(JSON.parse(data));
+		});
+	});
 	if(c.imageURL){
 		imgBtn.innerHTML = 'Regenerate Image';
 		const pic = document.createElement('img');
@@ -68,25 +83,7 @@ function appendCharacter(c){
 	}
 	else{
 		imgBtn.innerHTML = 'Generate Image';
-		imgBtn.addEventListener('click', () => {
-			profileHolder.innerHTML = 'Loading...';
-			imgBtn.style.display = 'none';
-			const address = apiAddress + `/api/NPC/Image`;
-			makePostRequest(address, JSON.stringify(c), (data) => {
-				appendCharacter(JSON.parse(data));
-				// imgBtn.innerHTML = 'Regenerate Image';
-				// imgBtn.style.display = null;
-				// const url = JSON.parse(data);
-				// c.imageURL = url;
-				// const pic = document.createElement('img');
-				// pic.src = url;
-				// pic.setAttribute('class','profilePic');
-				// profileHolder.innerHTML = '';
-				// picHolder.appendChild(pic);
-			});
-		});
 	}
-	
 
 	const headerBlock = document.createElement('div');
 	headerBlock.setAttribute('class','charHeader');
@@ -129,11 +126,6 @@ function appendCharacter(c){
 			const address = apiAddress + `/api/NPC/LongDescription?sentences=2`;
 			makePostRequest(address, JSON.stringify(c), (data) => {
 				appendCharacter(JSON.parse(data));
-				// descriptionBtn.innerText = 'Regenerate Description';
-				// descriptionBtn.style.display = null;
-				// const desc = JSON.parse(data);
-				// c.description = desc;
-				// descriptionInputArea.innerText = desc;
 			});
 		});
 		descriptionBtnArea.appendChild(descriptionBtn);
