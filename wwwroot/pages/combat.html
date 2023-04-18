@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en-nz">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta charset="UTF-8">
+	<title>Combat - D&amp;D</title>
+	<link rel="stylesheet" href="../css/styles.css">
+	<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" />
+	
+	<script src="../scripts/nav.js"></script>
+	<script src="../scripts/lists/themes.js"></script>
+	<script src="../scripts/utils.js"></script>
+	<script src="../scripts/combat.js"></script>
+</head>
+<body>
+<div class="navHolder">
+	<nav id="nav" pagePrefix="../"></nav>
+</div>
+
+<main>
+	<div class="pageWidth">
+		<header>
+			<h1 id="pageHeader">Combat</h1>
+            <h2>How do you want to do this..?</h2>
+		</header>
+		<section>
+			<div id="weaponSelectHolder"></div>
+            <div id="enemySelectHolder"></div>
+            <div id="themeSelectHolder"></div>
+            <div id="styleSelectHolder"></div>
+            <div>
+                <select id="lengthSelect">
+                    <option value="1">Short</option>
+                    <option value="3">Medium</option>
+                    <option value="5">Long</option>
+                </select>
+				<label for="lengthSelect">Description length</label>
+            </div>
+            <div class="randSelectArea">
+                <button id="descBtn">Describe</button>
+            </div>
+            <div id="description"></div>
+		</section>
+		<div class="scrollOverflow"></div>
+	</div>
+</main>
+</body>
+</html>

@@ -6,14 +6,14 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddCors(
-    options => options.AddDefaultPolicy(
-        builder => builder.WithOrigins("https://balfourcraig.github.io", "http://localhost:5500")
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-        .AllowCredentials()
-    )
-);
+// builder.Services.AddCors(
+//     options => options.AddDefaultPolicy(
+//         builder => builder.WithOrigins("https://balfourcraig.github.io", "http://localhost:5500")
+//         .AllowAnyHeader()
+//         .AllowAnyMethod()
+//         .AllowCredentials()
+//     )
+// );
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,11 +28,13 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
-app.UseCors(
-    builder => builder.WithOrigins("https://balfourcraig.github.io", "http://localhost:5500")
-    .AllowAnyHeader()
-    .AllowAnyMethod()
-    .AllowCredentials()
-    );
+// app.UseCors(
+//     builder => builder.WithOrigins("https://balfourcraig.github.io", "http://localhost:5500")
+//     .AllowAnyHeader()
+//     .AllowAnyMethod()
+//     .AllowCredentials()
+//     );
 app.Run();
