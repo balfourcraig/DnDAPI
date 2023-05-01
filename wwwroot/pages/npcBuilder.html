@@ -21,6 +21,9 @@
 	<script src="../scripts/lists/npcActions.js"></script>
 	<script src="../scripts/lists/npcPrayers.js"></script>
 	<script src="../scripts/lists/houses.js"></script>
+	<script src="../scripts/lists/npcProfessions.js"></script>
+	<script src="../scripts/lists/npcRace.js"></script>
+
 	
 	<script src="../scripts/lists/npcClothing.js"></script>
 	
@@ -38,8 +41,20 @@
 		</header>
 		<div>
 			<button id="rollBtn" class="randBtn">&#127922;</button>
+			<button id="blankBtn" class="randBtn">&#10006; Blank</button>
 		</div>
 		<section id="charArea">
+		</section>
+		<section id="chatArea">
+			<h2 id="chatTitle">Talk to</h2>
+			<div id="messageHolder">
+			</div>
+			<div id="chatInput">
+				<input type="text" id="chatInputBox" placeholder="Type here...">
+				<button id="chatResetBtn" class="randBtn">&#128472;</button>
+				<button id="chatSendBtn" class="randBtn">&#10148;</button>
+
+			</div>
 		</section>
 		<div class="scrollOverflow"></div>
 	</div>

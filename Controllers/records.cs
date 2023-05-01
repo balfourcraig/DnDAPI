@@ -32,7 +32,12 @@ namespace DnDAPI.Controllers{
         public string? Description  {get; set;} = null;
         public string? ImageURL  {get; set;} = null;
         public string? ImagePrompt { get; set; } = null;
+        public string? Race { get; set; } = null;
+        public string? Profession { get; set; } = null;
+        public string? Location { get; set; } = null;
     }
+
+    public record NPCChatRequest(ChatMessage[] Messages, NPC Person);
 
     public class Quest{
         public string Title { get; set; } = string.Empty;

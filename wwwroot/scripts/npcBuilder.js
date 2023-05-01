@@ -4,13 +4,100 @@ window.addEventListener('DOMContentLoaded', () => {
 	document.getElementById('rollBtn').addEventListener('click', () => {
 		appendCharacter(buildRandomCharacter());
 	});
+	document.getElementById('blankBtn').addEventListener('click', () => {
+		appendCharacter(buildBlankCharacter());
+	});
+	document.getElementById('chatSendBtn').addEventListener('click', sendChatMessage);
+	document.getElementById('chatResetBtn').addEventListener('click', resetChat);
+	document.getElementById('chatInputBox').addEventListener('keyup', (e) => {
+		if(e.keyCode === 13){
+			sendChatMessage();
+		}
+	});
+	resetChat();
 });
 
+let messages = [];
+
+function resetChat(){
+	messages = [];
+	const inputBox = document.getElementById('chatInputBox');
+	inputBox.value = '';
+	inputBox.disabled = false;
+	document.getElementById('messageHolder').innerHTML = '';
+}
+
+function sendChatMessage(){
+	const inputBox = document.getElementById('chatInputBox');
+	const msg = inputBox.value;
+	if(msg.trim() === ''){
+		alert('Please enter a message');
+	}
+	else{
+		messages.push({
+			role: 'user',
+			content: msg
+		});
+		const msgBlock = document.createElement('div');
+		msgBlock.classList.add('chatMsg');
+		msgBlock.classList.add('userMsg');
+		msgBlock.innerHTML = msg;
+		document.getElementById('messageHolder').appendChild(msgBlock);
+		inputBox.value = 'Loading...';
+		inputBox.disabled = true;
+		const address = apiAddress + `/api/NPC/Chat`;
+		const requestData = {
+			messages: messages,
+			person: person
+		};
+		makePostRequest(address, JSON.stringify(requestData), (data) => {
+			const response = JSON.parse(data);
+			const msgBlock = document.createElement('div');
+			msgBlock.classList.add('chatMsg');
+			msgBlock.classList.add('npcMsg');
+			msgBlock.innerHTML = '<span class="tag">' +  c.firstname + ': </span>' + response.content;
+			messages.push(
+				{
+					role: 'assistant',
+					content: response.content
+				}
+			);
+			document.getElementById('messageHolder').appendChild(msgBlock);
+			inputBox.value = '';
+			inputBox.disabled = false;
+			inputBox.focus();
+		});
+	}
+}
+
+function buildBlankCharacter(){
+	resetChat();
+	const c = {};
+	c.gender = '';
+	c.firstname = '';
+	c.lastname = '';
+	c.race = '';
+	c.loot = '';
+	c.flavor = '';
+	c.secret = '';
+	c.voice = '';
+	c.clothing = '';
+	c.action = '';
+	c.house = '';
+	c.imageURL = null;
+	c.description = null;
+	c.profession = '';
+	c.location = '';
+	return c;
+}
+
 function buildRandomCharacter(){
+	resetChat();
 	const c = {};
 	c.gender = Math.random() > 0.5 ? 'M' : 'F';
 	c.firstname = arrayRandom(c.gender === 'M' ? npcFirstnameM.items : npcFirstnameF.items);
 	c.lastname = arrayRandom(npcSurname.items);
+	c.race = arrayRandom(npcRace.items);
 	c.loot = generateLoot();//source from normal loot and gut wrench
 	c.flavor = arrayRandom(npcFlavor.items);
 	c.secret = arrayRandom(npcSecrets.items);
@@ -20,6 +107,8 @@ function buildRandomCharacter(){
 	c.house = buildHouse();
 	c.imageURL = null;
 	c.description = null;
+	c.profession = arrayRandom(npcProfessions.items);
+	c.location = '';
 	return c;
 }
 
@@ -90,7 +179,16 @@ function appendCharacter(c){
 	headerBlock.appendChild(picHolder);
 	const nameBlock = document.createElement('div');
 	nameBlock.setAttribute('class', 'nameBlock');
-	nameBlock.appendChild(buildLine(c.firstname, 'Firstname', () => arrayRandom(c.gender === 'M' ? npcFirstnameM.items : npcFirstnameF.items), (e) => c.firstname = e));
+	nameBlock.appendChild(buildLine(
+		c.firstname, 
+		'Firstname', 
+		() => arrayRandom(c.gender === 'M' ? npcFirstnameM.items : npcFirstnameF.items), 
+		(e) => {
+			c.firstname = e;
+			document.getElementById('chatTitle').innerText = `Talk to ${e}`;
+		},
+		true
+		));
 	nameBlock.appendChild(buildLine(c.lastname, 'Surname', () => arrayRandom(npcSurname.items), (e) => c.lastname = e));
 	
 	headerBlock.appendChild(nameBlock);
@@ -103,7 +201,8 @@ function appendCharacter(c){
 			c.gender = e;
 		})
 	);
-	
+	detailsTbl.appendChild(buildRowBlock(c.race, 'Race', () => arrayRandom(npcRace.items), (e) => c.race = e));
+
 	const descriptionRow = document.createElement('tr');
 	descriptionRow.setAttribute('class', 'lineArea');
 	const descriptionLabelArea = document.createElement('td');
@@ -143,6 +242,8 @@ function appendCharacter(c){
 	detailsTbl.appendChild(buildRowBlock(c.flavor, 'Detail', () => arrayRandom(npcFlavor.items), (e) => c.flavor = e));
 	detailsTbl.appendChild(buildRowBlock(c.secret, 'Secret', () => arrayRandom(npcSecrets.items), (e) => c.secret = e));
 	detailsTbl.appendChild(buildRowBlock(c.house, 'House', buildHouse, (e) => c.house = e));
+	detailsTbl.appendChild(buildRowBlock(c.profession, 'Profession', () => arrayRandom(npcProfessions.items), (e) => c.profession = e));
+	detailsTbl.appendChild(buildRowBlock(c.location, 'Location', () => '', (e) => c.location = e));
 	
 	charBlock.appendChild(detailsTbl);
 
@@ -176,7 +277,7 @@ function buildRowBlock(content, name, randFunc, updateFunc){
 		inp.innerText = randFunc();
 		updateFunc(inp.innerText);
 	});
-	
+
 	const labelTd = document.createElement('td');
 	labelTd.setAttribute('class','tblLabel');
 	const randTd = document.createElement('td');
@@ -194,7 +295,7 @@ function buildRowBlock(content, name, randFunc, updateFunc){
 	return row;
 }
 
-function buildLine(content, name, randFunc, updateFunc){
+function buildLine(content, name, randFunc, updateFunc, updateOnCreate = false){
 	const lineArea = document.createElement('div');
 	lineArea.setAttribute('class', 'lineArea');
 	const randBtn = document.createElement('button');
@@ -215,7 +316,9 @@ function buildLine(content, name, randFunc, updateFunc){
 		inp.innerText = randFunc();
 		updateFunc(inp.innerText);
 	});
-	
+	if(updateOnCreate){
+		updateFunc(inp.innerText);
+	}
 	lineArea.appendChild(label);
 	lineArea.appendChild(inp);
 	lineArea.appendChild(randBtn);

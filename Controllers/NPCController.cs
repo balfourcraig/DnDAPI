@@ -58,6 +58,52 @@ namespace DnDAPI.Controllers
             return Json(person);
         }
 
+        [HttpPost(Name = "Post_NPCChat")]
+        public async Task<IActionResult> Chat([FromBody] NPCChatRequest request)
+        {
+            NPC person = request.Person;
+            string? userKey = Request.Cookies["userKey"];
+            string systemPrompt = GetNPCChatPrompt(person);
+            List<ChatMessage> messages = new List<ChatMessage>();
+            messages.Add(new ChatMessage(Role: "System", Content: systemPrompt));
+            messages.AddRange(request.Messages);
+            ChatRequest chatRequest = new ChatRequest(messages.ToArray());
+            ChatResponse response =  await Utils.GetGPTResponseAsync(chatRequest, _configuration?["OpenAIKey"] ?? "");
+            if(response != null){
+                return Json(response.Choices[0].Message);
+            }
+            return BadRequest("Invalid NPC object");
+        }
+
+        private static string GetNPCChatPrompt(NPC person){
+            string prompt = "You are an NPC in a D&D-style roleplaying game. You are talking to a player character.";
+            if(!string.IsNullOrWhiteSpace(person.Firstname))
+                prompt += $" Your name is {person.Firstname}" + (string.IsNullOrWhiteSpace(person.Lastname) ? "." : $" {person.Lastname}.");
+            if(!string.IsNullOrWhiteSpace(person.Race))
+                prompt += $" You are {person.Race} race.";
+            if(!string.IsNullOrWhiteSpace(person.Gender))
+                prompt += $" You are a {(person.Gender == "M" ? "male" : "female")}.";
+            if(!string.IsNullOrWhiteSpace(person.Profession))
+                prompt += $" Your profession is {person.Profession}.";
+            if(!string.IsNullOrWhiteSpace(person.Voice))
+                prompt += $" Your voice feature is {person.Voice}.";
+            if(!string.IsNullOrWhiteSpace(person.Clothing))
+                prompt += $" You are wearing {person.Clothing.FormatLineBreakList()}.";
+            if(!string.IsNullOrWhiteSpace(person.Loot))
+                prompt += $" You are carrying {person.Loot.FormatLineBreakList()}, though some of that may be out of sight or hidden.";
+            if(!string.IsNullOrWhiteSpace(person.Action))
+                prompt += $" You are {person.Action}.";
+            if(!string.IsNullOrWhiteSpace(person.Secret))
+                prompt += $" You have a secret: {person.Secret}. Do not reveal your secret unless pushed.";
+            
+
+            prompt += ". The world setting is medieval.";
+            prompt += " You do not know things outside this setting.";
+            prompt += " You are moderately helpful.";
+            prompt += " You can do all things a normal person can do including all their senses";
+            return prompt;
+        }
+
         private static string GetNPCImagePrompt(NPC person, string key){
             if(person.ImagePrompt != null)
                 return person.ImagePrompt;

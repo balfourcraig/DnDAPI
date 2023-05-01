@@ -431,3 +431,31 @@ td{
 	color: #ffdd64;
 
   }
+
+  #chatInput{
+	display: flex;
+  }
+
+  #chatInput #chatInputBox{
+	flex-grow: 1;
+  }
+  #chatInput #chatSendBtn{
+	flex-grow: 0;
+  }
+  .chatMsg {
+	border: 1px solid;
+	padding: 1em;
+	}
+	.chatMsg.userMsg::before {
+	content: 'you: ';
+	opacity: 0.5;
+	}
+	.chatMsg.npcMsg span.tag {
+	opacity: 0.5;
+	}
+	.chatMsg.userMsg {
+	background: #002642;
+	}
+	.chatMsg.npcMsg {
+		background: #2b4200;
+		}
