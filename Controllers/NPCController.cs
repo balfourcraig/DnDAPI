@@ -65,7 +65,7 @@ namespace DnDAPI.Controllers
             string? userKey = Request.Cookies["userKey"];
             string systemPrompt = GetNPCChatPrompt(person);
             List<ChatMessage> messages = new List<ChatMessage>();
-            messages.Add(new ChatMessage(Role: "System", Content: systemPrompt));
+            messages.Add(new ChatMessage(Role: "system", Content: systemPrompt));
             messages.AddRange(request.Messages);
             ChatRequest chatRequest = new ChatRequest(messages.ToArray());
             ChatResponse response =  await Utils.GetGPTResponseAsync(chatRequest, _configuration?["OpenAIKey"] ?? "");
@@ -95,11 +95,16 @@ namespace DnDAPI.Controllers
                 prompt += $" You are {person.Action}.";
             if(!string.IsNullOrWhiteSpace(person.Secret))
                 prompt += $" You have a secret: {person.Secret}. Do not reveal your secret unless pushed.";
+            if(!string.IsNullOrWhiteSpace(person.Location))
+                prompt += $" You are in {person.Location}.";
+            if(!string.IsNullOrWhiteSpace(person.House))
+                prompt += $" You live in {person.House}.";
             
 
             prompt += ". The world setting is medieval.";
             prompt += " You do not know things outside this setting.";
             prompt += " You are moderately helpful.";
+            prompt += " Your answers should be short and to the point.";
             prompt += " You can do all things a normal person can do including all their senses";
             return prompt;
         }

@@ -55,7 +55,7 @@ function sendChatMessage(){
 			const msgBlock = document.createElement('div');
 			msgBlock.classList.add('chatMsg');
 			msgBlock.classList.add('npcMsg');
-			msgBlock.innerHTML = '<span class="tag">' +  c.firstname + ': </span>' + response.content;
+			msgBlock.innerHTML = '<span class="tag">' +  person.firstname + ': </span>' + response.content;
 			messages.push(
 				{
 					role: 'assistant',
