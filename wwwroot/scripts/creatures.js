@@ -1,4 +1,3 @@
-const dndAPI = 'https://www.dnd5eapi.co';
 
 let creatures = [];
 
@@ -38,16 +37,20 @@ function getArea() {
 
 function searchResult(name, url){
     const creatureListItem = document.createElement('li');
-    creatureListItem.addEventListener('click', () => {
-        const creatureHolder = document.getElementById('creatureHolder');
-        fetchDnDData(url, creatureHolder);
-        const creatureListHolder = document.getElementById('creatureList');
-        creatureListHolder.innerHTML = '';
-        const creatureList = document.createElement('ul');
-        creatureList.appendChild(searchResult(name,url));
-        creatureListHolder.appendChild(creatureList);
-    });
-    creatureListItem.innerText = name; 
+    const listLink = document.createElement('a');
+    listLink.href = url;
+    listLink.innerText = name;
+    creatureListItem.appendChild(listLink);
+    // creatureListItem.addEventListener('click', () => {
+    //     const creatureHolder = document.getElementById('creatureHolder');
+    //     fetchDnDData(url, creatureHolder);
+    //     const creatureListHolder = document.getElementById('creatureList');
+    //     creatureListHolder.innerHTML = '';
+    //     const creatureList = document.createElement('ul');
+    //     creatureList.appendChild(searchResult(name,url));
+    //     creatureListHolder.appendChild(creatureList);
+    // });
+    //creatureListItem.innerText = name; 
     return creatureListItem;
 }
 
@@ -66,6 +69,7 @@ function searchCreatures(displayAll = false) {
             creatureList.appendChild(searchResult(creature.name, creature.url));
         }
         creatureListHolder.appendChild(creatureList);
+        updateLinks();
     }
 }
 

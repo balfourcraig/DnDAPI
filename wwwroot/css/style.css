@@ -1,0 +1,185 @@
+*{
+	box-sizing: border-box !important;
+}
+
+body{
+	padding: 0;
+	margin: 0;
+	min-height: 100vh;
+	background-color: #000;
+	display: flex;
+	flex-direction: column;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+a{
+	color: #ff8000;
+}
+
+a:hover{
+	color: #b3fff0;
+	text-shadow: 0 0 15px #ff8000;
+}
+
+main{
+	flex-grow: 1;
+}
+
+main .pageWidth{
+	position: relative;
+}
+
+main p {
+	line-height: 1.5em;
+}
+
+h1, h2, h3, h3{
+	color: red;
+}
+
+nav{
+	max-width: 960px;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-around;
+}
+
+nav a{
+	padding: 10px;
+	font-size: 1.3rem;
+	flex-grow: 1;
+	text-align: center;
+	text-decoration: none;
+	border-top-left-radius: 1em;
+	border-top-right-radius: 1em;
+}
+
+nav a.selected{
+	border-left: 1px solid red;
+	border-right: 1px solid red;
+	background-color: #0a2642;
+}
+
+
+nav a:hover{
+	text-decoration: none;
+	background-color: red;
+	color: white;
+	box-shadow: 0 0 25px red;
+}
+
+textarea{
+	resize: vertical;
+}
+
+input, textarea{
+	margin: 5px;
+	background-color: black;
+	color: #ccc;
+	padding: 5px;
+	border: 2px inset #ccc;
+	border-radius: 0.5em;
+}
+
+input[type="number"]{
+	color: #c49c00;
+	border-color: #c49c00;
+}
+
+input[type="text"], textarea{
+	color: #99c0ff;
+	border-color: #99c0ff;
+}
+
+select{
+	padding: 5px;
+	margin: 5px;
+	background-color: black;
+	color: #ff8000;
+	border: 1px inset #ff8000;
+	border-radius: 0.5em;
+}
+
+button{
+	margin: 5px 0;
+	padding: 10px;
+	border: 2px outset #ff8000;
+	color: #ff8000;
+	background-color: black;
+	border-radius: 0.5em;
+	cursor: pointer;
+}
+
+button:hover{
+	background-color: #ff8000;
+	color: black;
+}
+
+button:disabled{
+	color: grey;
+	border-color: grey;
+	cursor: not-allowed;
+}
+
+button:disabled:hover{
+	background-color: white;
+}
+
+li{
+	margin-bottom: 1em;
+}
+
+.pageWidth{
+	max-width: 960px;
+	margin: 0 auto;
+	padding: 10px;
+	background-color: #222;
+	min-height: 100%;
+	color: #ccc;
+}
+
+.scrollOverflow{
+	width: 100%;
+	height: 90vh;
+	position: relative;
+}
+
+.navHolder{
+	width: 100%;
+	background-color: #111;
+	border-bottom: 2px solid red;
+}
+
+.fullwidth{
+	width: 100%;
+}
+
+.tab{
+	display: none;
+}
+
+.tab.open{
+	display: block;
+}
+
+td{
+	vertical-align: top;
+	border-bottom: 1px solid #666;
+	padding: 5px;
+}
+
+.hidden{
+	display: none;
+}
+.statBlock{
+    width:100%;
+    text-align: center;
+}
+
+.indent{
+	margin-left: 2em;
+}
+
+label{
+	opacity: 0.5;
+}

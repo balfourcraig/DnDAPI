@@ -1,3 +1,5 @@
+const dndAPI = 'https://www.dnd5eapi.co';
+
 const golden_ratio= 1.618033988749895;
 const goldenAngleRad = 2.39996322972865332;
 const local = true;
@@ -25,6 +27,20 @@ function userKey(){
 		if(key)
 			setCookie('userKey', key, 365);
 	}
+}
+
+const updateLinks = () => {
+    const links = document.querySelectorAll('a');
+    links.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('/api/spells')) {
+            const spellId = '../' + href.substring(5) + '.html';
+            link.setAttribute('href', spellId);
+        }
+        else if (href && href.startsWith('/api/')) {
+            link.setAttribute('href', '../pages/dndJson.html?url=' + href);
+        }
+    });
 }
 
 const cookieExists = (cName) => {
@@ -509,11 +525,11 @@ function printDnDJson(item, topHolder, topLevel = false, parentProperty = ''){
                 if(!child.empty){
                     if(isLink && property === 'name' && !topLevel){
                         const link = document.createElement('a');
-                        link.href = '#';
+                        link.href = item['url'];
                         link.innerText = formatName(property);
-                        link.addEventListener('click', () => {
-                            fetchDnDData(item['url'], topHolder);
-                        });
+                        // link.addEventListener('click', () => {
+                        //     fetchDnDData(item['url'], topHolder);
+                        // });
                         propHolder.appendChild(link);
                     }
                     else if(!isNumber(property)){
@@ -533,11 +549,11 @@ function printDnDJson(item, topHolder, topLevel = false, parentProperty = ''){
                 propEmpty = false;
                 if(isLink && property === 'name' && !topLevel){
                     const link = document.createElement('a');
-                    link.href = '#';
+                    link.href = item['url'];
                     link.innerText = item[property];
-                    link.addEventListener('click', () => {
-                        fetchDnDData(item['url'], topHolder);
-                    });
+                    // link.addEventListener('click', () => {
+                    //     fetchDnDData(item['url'], topHolder);
+                    // });
                     propHolder.appendChild(link);
                 }
 				else if (item[property].toString().startsWith('/api/')){
@@ -632,4 +648,5 @@ function displayDnDData(creature, holder){
 	}
     const creatureDetails = printDnDJson(creature, holder, true, '')
     holder.appendChild(creatureDetails.contents);
+	updateLinks();
 }

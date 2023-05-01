@@ -1,25 +1,25 @@
 const navLinks = [
     {
         name: 'Home',
-        link: 'index.html'
+        link: '/index.html'
     },
     {
         name: 'NPC Builder',
-        link: 'pages/npcBuilder.html'
+        link: '/pages/npcBuilder.html'
     },
     {
         name: 'House Builder',
-        link: 'pages/houseBuilder.html'
+        link: '/pages/houseBuilder.html'
     },
     {
         name: 'Combat',
-        link: 'pages/combat.html'
+        link: '/pages/combat.html'
     },
 ];
 
 function buildNav(){
     const nav = document.getElementById('nav');
-    const pagePrefix = nav.getAttribute('pagePrefix') ?? '';
+    const pagePrefix = '';//nav.getAttribute('pagePrefix') ?? '';
     nav.innerHTML = '';
     const currentPage = window.location.pathname.split('/').pop();
     navLinks.forEach((link) => {
