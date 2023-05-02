@@ -68,7 +68,7 @@ namespace DnDAPI.Controllers
             messages.Add(new ChatMessage(Role: "system", Content: systemPrompt));
             messages.AddRange(request.Messages);
             ChatRequest chatRequest = new ChatRequest(messages.ToArray());
-            ChatResponse response =  await Utils.GetGPTResponseAsync(chatRequest, _configuration?["OpenAIKey"] ?? "");
+            ChatResponse? response =  await Utils.GetGPTResponseAsync(chatRequest, _configuration?["OpenAIKey"] ?? "");
             if(response != null){
                 return Json(response.Choices[0].Message);
             }

@@ -1,3 +1,5 @@
+let savedCharacters = [];
+
 let person = null;
 window.addEventListener('DOMContentLoaded', () => {
 	appendCharacter(buildRandomCharacter());
@@ -15,9 +17,55 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 	resetChat();
+	loadCharactersFromLocalStorage();
 });
 
 let messages = [];
+
+function loadCharactersFromLocalStorage(){
+	const saveBlock = document.getElementById('savedCharBlock');
+	const data = localStorage.getItem('savedCharacters');
+	if(data){
+		const holder = document.getElementById('savedCharHolder');
+		holder.innerHTML = '';
+		savedCharacters = JSON.parse(data);
+		if(savedCharacters.length > 0)
+			saveBlock.style.display = 'block';
+		else
+			saveBlock.style.display = 'none';
+		for(let i = 0; i < savedCharacters.length; i++){
+			const c = savedCharacters[i];
+			const charBlock = document.createElement('div');
+			charBlock.setAttribute('class','savedCharBlock');
+			const name = document.createElement('div');
+			name.setAttribute('class','charName');
+			name.innerHTML = c.firstname + ' ' + c.lastname;
+			charBlock.appendChild(name);
+			const delCharBtn = document.createElement('button');
+			delCharBtn.setAttribute('class','delBtn');
+			delCharBtn.innerHTML = 'X';
+			delCharBtn.addEventListener('click', () => {
+				savedCharacters.splice(i, 1);
+				saveCharacters();
+				loadCharactersFromLocalStorage();
+			});
+			charBlock.appendChild(delCharBtn);
+			charBlock.addEventListener('click', () => {
+				appendCharacter(c);
+			});
+			holder.appendChild(charBlock);
+		}
+	}
+	else{
+		saveBlock.style.display = 'none';
+	}
+}
+
+function saveCharacters(){
+	localStorage.setItem('savedCharacters', JSON.stringify(savedCharacters));
+	loadCharactersFromLocalStorage();
+}
+
 
 function resetChat(){
 	messages = [];
@@ -147,6 +195,24 @@ function appendCharacter(c){
 
 	const charBlock = document.createElement('div');
 	charBlock.setAttribute('class','charBlock');
+
+	const saveBtn = document.createElement('button');
+
+	saveBtn.innerHTML = '&#128190;  Save'
+	saveBtn.addEventListener('click', () => {
+		let existing = false;
+		for(let i = 0; i < savedCharacters.length; i++){
+			if(savedCharacters[i].firstname === c.firstname && savedCharacters[i].lastname === c.lastname){
+				savedCharacters[i] = c;
+				existing = true;
+				break;
+			}
+		}
+		if(!existing)
+			savedCharacters.push(c);
+		saveCharacters();
+	});
+	charBlock.appendChild(saveBtn);
 
 	const picHolder = document.createElement('div');
 	picHolder.setAttribute('class','picHolder');

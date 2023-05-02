@@ -1,8 +1,8 @@
-*{
+* {
 	box-sizing: border-box !important;
 }
 
-body{
+body {
 	padding: 0;
 	margin: 0;
 	min-height: 100vh;
@@ -12,20 +12,20 @@ body{
 	font-family: Arial, Helvetica, sans-serif;
 }
 
-a{
+a {
 	color: #00ffcc;
 }
 
-a:hover{
+a:hover {
 	color: #b3fff0;
 	text-shadow: 0 0 15px #00ffcc;
 }
 
-main{
+main {
 	flex-grow: 1;
 }
 
-main .pageWidth{
+main .pageWidth {
 	position: relative;
 }
 
@@ -33,18 +33,21 @@ main p {
 	line-height: 1.5em;
 }
 
-h1, h2, h3, h3{
+h1,
+h2,
+h3,
+h3 {
 	color: dodgerblue;
 }
 
-nav{
+nav {
 	max-width: 960px;
 	margin: 0 auto;
 	display: flex;
 	justify-content: space-around;
 }
 
-nav a{
+nav a {
 	padding: 10px;
 	font-size: 1.3rem;
 	flex-grow: 1;
@@ -54,25 +57,26 @@ nav a{
 	border-top-right-radius: 1em;
 }
 
-nav a.selected{
+nav a.selected {
 	border-left: 1px solid dodgerblue;
 	border-right: 1px solid dodgerblue;
 	background-color: #0a2642;
 }
 
 
-nav a:hover{
+nav a:hover {
 	text-decoration: none;
 	background-color: dodgerblue;
 	color: white;
 	box-shadow: 0 0 25px dodgerblue;
 }
 
-textarea{
+textarea {
 	resize: vertical;
 }
 
-input, textarea{
+input,
+textarea {
 	margin: 5px;
 	background-color: black;
 	color: #ccc;
@@ -81,17 +85,18 @@ input, textarea{
 	border-radius: 0.5em;
 }
 
-input[type="number"]{
+input[type="number"] {
 	color: #c49c00;
 	border-color: #c49c00;
 }
 
-input[type="text"], textarea{
+input[type="text"],
+textarea {
 	color: #99c0ff;
 	border-color: #99c0ff;
 }
 
-select{
+select {
 	padding: 5px;
 	margin: 5px;
 	background-color: black;
@@ -100,21 +105,21 @@ select{
 	border-radius: 0.5em;
 }
 
-fieldset{
+fieldset {
 	border: 2px inset #5e5e5e;
 	border-radius: 0.5em;
 	background-color: #181818;
 	margin-bottom: 1em;
 }
 
-fieldset legend{
+fieldset legend {
 	background-color: #5e5e5e;
 	padding: 0.5em;
 	border: 2px outset #5e5e5e;
 	border-radius: 0.5em;
 }
 
-button{
+button {
 	margin: 5px 0;
 	padding: 10px;
 	border: 2px outset aquamarine;
@@ -122,24 +127,25 @@ button{
 	background-color: black;
 	border-radius: 0.5em;
 	cursor: pointer;
+
 }
 
-button:hover{
+button:hover {
 	background-color: aquamarine;
 	color: black;
 }
 
-button:disabled{
+button:disabled {
 	color: grey;
 	border-color: grey;
 	cursor: not-allowed;
 }
 
-button:disabled:hover{
+button:disabled:hover {
 	background-color: white;
 }
 
-button.delBtn{
+button.delBtn {
 	margin: 5px 0;
 	padding: 10px;
 	border: 2px outset red;
@@ -149,16 +155,16 @@ button.delBtn{
 	cursor: pointer;
 }
 
-button.delBtn:hover{
+button.delBtn:hover {
 	background-color: red;
 	color: black;
 }
 
-li{
+li {
 	margin-bottom: 1em;
 }
 
-.pageWidth{
+.pageWidth {
 	max-width: 960px;
 	margin: 0 auto;
 	padding: 10px;
@@ -167,38 +173,38 @@ li{
 	color: #ccc;
 }
 
-.scrollOverflow{
+.scrollOverflow {
 	width: 100%;
 	height: 90vh;
 	position: relative;
 }
 
-#sizeCalc{
+#sizeCalc {
 	padding: 2px;
 }
 
-#stopDrawingBtn{
+#stopDrawingBtn {
 	border: 2px solid red;
 	color: red;
 }
 
-#stopDrawingBtn:hover{
+#stopDrawingBtn:hover {
 	color: white;
 	background-color: red;
 }
 
-.navHolder{
+.navHolder {
 	width: 100%;
 	background-color: #111;
 	border-bottom: 2px solid dodgerblue;
 }
 
-.area{
+.area {
 	margin-top: 30px;
 	margin-bottom: 60px;
 }
 
-.secBlock{
+.secBlock {
 	margin-bottom: 10px;
 	padding: 10px;
 	background-color: #181818;
@@ -206,99 +212,102 @@ li{
 	border-radius: 0.5em;
 }
 
-.secBlock:first-child{
+.secBlock:first-child {
 	border-top-left-radius: 1em;
 	border-top-right-radius: 1em;
 }
 
 
-.secBlock:last-child{
+.secBlock:last-child {
 	border-bottom-left-radius: 1em;
 	border-bottom-right-radius: 1em;
 }
 
-.fullwidth{
+.fullwidth {
 	width: 100%;
 }
 
-.optionsArea{
+.optionsArea {
 	display: flex;
 	flex-wrap: wrap;
 	border-bottom: 1px solid gray;
 }
 
-.optionsArea .op{
+.optionsArea .op {
 	margin: 10px 0;
 	min-width: 50%;
 	flex-grow: 1;
 }
 
-.optionsArea .nameArea{
+.optionsArea .nameArea {
 	width: 100%;
 }
 
-.optionsArea .nameArea #nameInput{
+.optionsArea .nameArea #nameInput {
 	width: 100%;
 	font-size: 2rem;
 	padding: 1rem;
 }
 
-.pendulumOptions .op{
+.pendulumOptions .op {
 	border-bottom: 1px dotted black;
 }
 
-.tab{
+.tab {
 	display: none;
 }
 
-.tab.open{
+.tab.open {
 	display: block;
 }
 
-.randSelectArea{
+.randSelectArea {
 	display: flex;
 	align-items: center;
-	
+
 }
 
-.detailsTable{
+.detailsTable {
 	width: 100%;
 	border-collapse: collapse;
 }
 
-.randBtn{
+.randBtn {
 	font-size: 32px;
 	padding: 0;
 }
 
-.randSelectArea #rollBtn{
+.randSelectArea #rollBtn {
 	margin-right: 25px;
 }
 
-.randSelectArea div{
+.randSelectArea div {
 	font-size: 32px;
 }
 
-.nameBlock .lineArea{
+.nameBlock .lineArea {
 	display: flex;
 	align-items: center;
 }
 
-.lineArea div{
+.lineArea div {
 	width: 100%;
 	margin: 0 1em;
+	background: #313131;
+	padding: 0.5em;
+
 }
 
-.detailsTable .lineArea div{
+.detailsTable .lineArea div {
 	margin: 0;
 }
 
-.detailsTable .tblRand{
+.detailsTable .tblRand {
 	text-align: center;
 	width: 0;
 }
 
-.detailsTable .tblLabel{
+.detailsTable .tblLabel {
 	text-align: left;
 	vertical-align: top;
 	width: 0;
@@ -314,27 +323,27 @@ li{
 }
 
 .charBlock .profilePic {
-  height: 128px;
-  border-radius: 10px;
+	height: 128px;
+	border-radius: 10px;
 }
 
 .charHeader {
-  display: flex;
+	display: flex;
 }
 
 .nameBlock {
-  width: 100%;
+	width: 100%;
 }
 
 .nameBlock label {
-  display: none;
+	display: none;
 }
 
 .nameBlock div {
-  font-size: 24px;
+	font-size: 24px;
 }
 
-td{
+td {
 	vertical-align: top;
 	border-bottom: 1px solid #666;
 	padding: 5px;
@@ -344,36 +353,41 @@ td{
 	opacity: 0.5;
 }
 
-.hidden{
+.hidden {
 	display: none;
 }
 
 #printBtn {
-  padding: 0;
-  font-size: 32px;
-  border-radius: 5px;
+	padding: 0;
+	font-size: 32px;
+	border-radius: 5px;
 }
 
-@media print{
-	.navHolder, button, header{
+@media print {
+
+	.navHolder,
+	button,
+	header {
 		display: none;
 	}
 
-	body, .pageWidth, .charBlock{
+	body,
+	.pageWidth,
+	.charBlock {
 		background-color: white;
 	}
 
-	.pageWidth{
+	.pageWidth {
 		margin: 0;
 	}
-	
-	#charArea{
+
+	#charArea {
 		display: flex;
 		flex-wrap: wrap;
 		position: relative;
 	}
-	
-	.charBlock{
+
+	.charBlock {
 		color: black;
 		box-shadow: inset 0 0 1000px #eee;
 		border: none;
@@ -386,16 +400,17 @@ td{
 		page-break-inside: avoid;
 	}
 
-	input,textarea {
-	  color: black !important;
-	  background-color: white;
-	  border: none;
-	  padding: 0;
+	input,
+	textarea {
+		color: black !important;
+		background-color: white;
+		border: none;
+		padding: 0;
 	}
 
-	
 
-	td{
+
+	td {
 		padding: 0;
 		padding-bottom: 3px;
 		font-size: 12px;
@@ -412,50 +427,71 @@ td{
 	margin-left: 1em;
 	border-left: 1px solid #666;
 	padding: 5px;
-  }
+}
 
-  .propertyHolder label{
+.propertyHolder label {
 	opacity: 0.5;
-  }
+}
 
-  .statBlock{
-	width:100%;
+.statBlock {
+	width: 100%;
 	text-align: center;
-  }
+}
 
-  .minimized{
-	  display: none;
-  }
+.minimized {
+	display: none;
+}
 
-  .questItem{
+.questItem {
 	color: #ffdd64;
 
-  }
+}
 
-  #chatInput{
+#chatInput {
 	display: flex;
-  }
+}
 
-  #chatInput #chatInputBox{
+#chatInput #chatInputBox {
 	flex-grow: 1;
-  }
-  #chatInput #chatSendBtn{
+}
+
+#chatInput #chatSendBtn {
 	flex-grow: 0;
-  }
-  .chatMsg {
+}
+
+.chatMsg {
 	border: 1px solid;
 	padding: 1em;
-	}
-	.chatMsg.userMsg::before {
+}
+
+.chatMsg.userMsg::before {
 	content: 'you: ';
 	opacity: 0.5;
-	}
-	.chatMsg.npcMsg span.tag {
+}
+
+.chatMsg.npcMsg span.tag {
 	opacity: 0.5;
-	}
-	.chatMsg.userMsg {
+}
+
+.chatMsg.userMsg {
 	background: #002642;
-	}
-	.chatMsg.npcMsg {
-		background: #2b4200;
-		}
+}
+
+.chatMsg.npcMsg {
+	background: #2b4200;
+}
+
+.savedCharBlock {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #444;
+	margin: .5em;
+	padding: .5em;
+	border-radius: .5em;
+}
+
+.savedCharBlock:hover {
+	background: #555;
+	cursor: pointer;
+}
