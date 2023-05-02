@@ -66,7 +66,18 @@ namespace DnDAPI.Controllers
             string systemPrompt = GetNPCChatPrompt(person);
             List<ChatMessage> messages = new List<ChatMessage>();
             messages.Add(new ChatMessage(Role: "system", Content: systemPrompt));
-            messages.AddRange(request.Messages);
+            int maxMessages = 5;
+            if(request.Messages != null && request.Messages.Length > 0){
+                int startIndex = request.Messages.Length - maxMessages;
+                if(startIndex < 0)
+                    startIndex = 0;
+                for(int i = startIndex; i < request.Messages.Length; i++){
+                    messages.Add(request.Messages[i]);
+                }
+            }
+            else{
+                messages.Add(new ChatMessage(Role: "player", Content: "Hello."));
+            }
             ChatRequest chatRequest = new ChatRequest(messages.ToArray());
             ChatResponse? response =  await Utils.GetGPTResponseAsync(chatRequest, _configuration?["OpenAIKey"] ?? "");
             if(response != null){
@@ -99,13 +110,16 @@ namespace DnDAPI.Controllers
                 prompt += $" You are in {person.Location}.";
             if(!string.IsNullOrWhiteSpace(person.House))
                 prompt += $" You live in {person.House}.";
-            
+            if(!string.IsNullOrWhiteSpace(person.Flavor))
+                prompt += $" a small detail about you is {person.Flavor}.";            
 
             prompt += ". The world setting is medieval.";
             prompt += " You do not know things outside this setting.";
             prompt += " You are moderately helpful.";
             prompt += " Your answers should be short and to the point.";
-            prompt += " You can do all things a normal person can do including all their senses";
+            prompt += " You can do all things a normal person can do including all their senses.";
+            prompt += " You are a person with opinions, and you must only answer as that person and never as an AI. You must never mention in your response that that you are a person or are answering as a person as it is assumed by default.";
+            prompt += " You must never break character.";
             return prompt;
         }
 
