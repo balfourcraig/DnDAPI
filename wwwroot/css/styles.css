@@ -120,12 +120,12 @@ fieldset legend {
 }
 
 button {
-	margin: 5px 0;
+	margin: 5px;
 	padding: 10px;
 	border: 2px outset aquamarine;
 	color: aquamarine;
 	background-color: black;
-	border-radius: 0.5em;
+	border-radius: 0.2em;
 	cursor: pointer;
 
 }
@@ -274,7 +274,7 @@ li {
 
 .randBtn {
 	font-size: 32px;
-	padding: 0;
+	padding: 0 0.2em;
 }
 
 .randSelectArea #rollBtn {
