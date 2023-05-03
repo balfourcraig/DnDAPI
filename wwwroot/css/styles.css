@@ -551,3 +551,11 @@ td {
 	background-color: #093a00;
 	
 }
+
+.extraRow input{
+	width: 100%;
+}
+
+.centerCell{
+	text-align: center;
+}
