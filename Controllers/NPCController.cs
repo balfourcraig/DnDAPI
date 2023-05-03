@@ -90,10 +90,14 @@ namespace DnDAPI.Controllers
             string prompt = "You are an NPC in a D&D-style roleplaying game. You are talking to a player character.";
             if(!string.IsNullOrWhiteSpace(person.Firstname))
                 prompt += $" Your name is {person.Firstname}" + (string.IsNullOrWhiteSpace(person.Lastname) ? "." : $" {person.Lastname}.");
-            if(!string.IsNullOrWhiteSpace(person.Race))
-                prompt += $" You are {person.Race} race.";
-            if(!string.IsNullOrWhiteSpace(person.Gender))
-                prompt += $" You are a {(person.Gender == "M" ? "male" : "female")}.";
+            if(!string.IsNullOrWhiteSpace(person.Race) || !string.IsNullOrWhiteSpace(person.Gender)){
+                prompt += " You are a";
+                if(!string.IsNullOrWhiteSpace(person.Gender))
+                    prompt += " " + (person.Gender == "M" ? "male" : "female");
+                if(!string.IsNullOrWhiteSpace(person.Race))
+                    prompt += " " + person.Race;
+                prompt += ".";
+            }
             if(!string.IsNullOrWhiteSpace(person.Profession))
                 prompt += $" Your profession is {person.Profession}.";
             if(!string.IsNullOrWhiteSpace(person.Voice))
@@ -107,15 +111,16 @@ namespace DnDAPI.Controllers
             if(!string.IsNullOrWhiteSpace(person.Secret))
                 prompt += $" You have a secret: {person.Secret}. Do not reveal your secret unless pushed.";
             if(!string.IsNullOrWhiteSpace(person.Location))
-                prompt += $" You are in {person.Location}.";
+                prompt += $" You are in {person.Location} but you do not live here.";
             if(!string.IsNullOrWhiteSpace(person.House))
                 prompt += $" You live in {person.House}.";
             if(!string.IsNullOrWhiteSpace(person.Flavor))
                 prompt += $" a small detail about you is {person.Flavor}.";            
 
-            prompt += ". The world setting is medieval.";
-            prompt += " You do not know things outside this setting.";
-            //prompt += " You are moderately helpful.";
+            prompt += " The world setting is medieval fantasy.";
+            prompt += " You do not know things outside this setting, such as modern technology or pop culture references.";
+            prompt += " You have your own goals and motivations, and you are not necessarily friendly or helpful to the player character.";
+            prompt += " You may be violent, rude, aggressive, or racist if it fits your character.";
             prompt += " Your answers should be short and to the point.";
             prompt += " You can do all things a normal person can do including all their senses.";
             prompt += " You are a person with opinions, and you must only answer as that person and never as an AI. You must never mention in your response that that you are a person or are answering as a person as it is assumed by default.";
