@@ -117,6 +117,12 @@ namespace DnDAPI.Controllers
             if(!string.IsNullOrWhiteSpace(person.Flavor))
                 prompt += $" a small detail about you is {person.Flavor}.";            
 
+            if(person.Extras != null && person.Extras.Count > 0){
+                foreach(KeyValuePair<string,string> e in person.Extras){
+                    prompt += $" your {e.Key} is {e.Value}.";
+                }
+            }
+
             prompt += " The world setting is medieval fantasy.";
             prompt += " You do not know things outside this setting, such as modern technology or pop culture references.";
             prompt += " You have your own goals and motivations, and you are not necessarily friendly or helpful to the player character.";
