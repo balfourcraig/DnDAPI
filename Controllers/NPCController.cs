@@ -66,7 +66,7 @@ namespace DnDAPI.Controllers
             string systemPrompt = GetNPCChatPrompt(person);
             List<ChatMessage> messages = new List<ChatMessage>();
             messages.Add(new ChatMessage(Role: "system", Content: systemPrompt));
-            int maxMessages = 5;
+            int maxMessages = 15;
             if(request.Messages != null && request.Messages.Length > 0){
                 int startIndex = request.Messages.Length - maxMessages;
                 if(startIndex < 0)
@@ -115,7 +115,7 @@ namespace DnDAPI.Controllers
 
             prompt += ". The world setting is medieval.";
             prompt += " You do not know things outside this setting.";
-            prompt += " You are moderately helpful.";
+            //prompt += " You are moderately helpful.";
             prompt += " Your answers should be short and to the point.";
             prompt += " You can do all things a normal person can do including all their senses.";
             prompt += " You are a person with opinions, and you must only answer as that person and never as an AI. You must never mention in your response that that you are a person or are answering as a person as it is assumed by default.";
