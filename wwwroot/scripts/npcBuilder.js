@@ -16,23 +16,75 @@ window.addEventListener('DOMContentLoaded', () => {
 			sendChatMessage();
 		}
 	});
+	document.getElementById('downloadBtn').addEventListener('click', exportAllCharactersToJSONFile);
+	document.getElementById('uploadBtn').addEventListener('click', () => {
+		document.getElementById('fileInput').click();
+	});
+	document.getElementById('fileInput').addEventListener('change', importCharactersFromJSONFile);
 	resetChat();
 	loadCharactersFromLocalStorage();
 });
 
 let messages = [];
 
+function importCharactersFromJSONFile(){
+	const fileInput = document.getElementById('fileInput');
+	const file = fileInput.files[0];
+	const reader = new FileReader();
+	reader.onload = function(e) {
+		const contents = e.target.result;
+		try{
+			const json = JSON.parse(contents);
+			let chars = [];
+			if(json.length)
+				chars = json;
+			else
+				chars.push(json);
+			for(let i = 0; i < chars.length; i++){
+				for(let j = 0; j < savedCharacters.length; j++){
+					if(savedCharacters[j].firstname === chars[i].firstname && savedCharacters[j].lastname === chars[i].lastname){
+						savedCharacters.splice(j, 1);
+						break;
+					}
+				}
+				savedCharacters.push(chars[i]);
+			}
+		}
+		catch(e){
+			alert('Invalid file format');
+			return;
+		}
+		saveCharacters();
+	};
+	reader.readAsText(file);
+}
+
+function exportAllCharactersToJSONFile(){
+	const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(savedCharacters));
+	const downloadAnchorNode = document.createElement('a');
+	downloadAnchorNode.setAttribute("href",     dataStr);
+	downloadAnchorNode.setAttribute("download", "characters.dndchar");
+	document.body.appendChild(downloadAnchorNode); // required for firefox
+	downloadAnchorNode.click();
+	downloadAnchorNode.remove();	
+}
+ 
+function exportCharToJSONFIle(c){
+	const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(c));
+	const downloadAnchorNode = document.createElement('a');
+	downloadAnchorNode.setAttribute("href",     dataStr);
+	downloadAnchorNode.setAttribute("download", c.firstname + c.lastname + ".dndchar");
+	document.body.appendChild(downloadAnchorNode); // required for firefox
+	downloadAnchorNode.click();
+	downloadAnchorNode.remove();
+}
+
 function loadCharactersFromLocalStorage(){
-	const saveBlock = document.getElementById('savedCharBlock');
 	const data = localStorage.getItem('savedCharacters');
 	if(data){
 		const holder = document.getElementById('savedCharHolder');
 		holder.innerHTML = '';
 		savedCharacters = JSON.parse(data);
-		if(savedCharacters.length > 0)
-			saveBlock.style.display = 'block';
-		else
-			saveBlock.style.display = 'none';
 		for(let i = 0; i < savedCharacters.length; i++){
 			const c = savedCharacters[i];
 			const charBlock = document.createElement('div');
@@ -41,6 +93,16 @@ function loadCharactersFromLocalStorage(){
 			name.setAttribute('class','charName');
 			name.innerHTML = c.firstname + ' ' + c.lastname;
 			charBlock.appendChild(name);
+
+			const exportBtn = document.createElement('button');
+			exportBtn.title = 'Export to file';
+			exportBtn.setAttribute('class','randBtn');
+			exportBtn.innerHTML = '&#11123;';
+			exportBtn.addEventListener('click', () => {
+				exportCharToJSONFIle(c);
+			});
+			charBlock.appendChild(exportBtn);
+
 			const delCharBtn = document.createElement('button');
 			delCharBtn.setAttribute('class','delBtn');
 			delCharBtn.innerHTML = 'X';
@@ -55,9 +117,6 @@ function loadCharactersFromLocalStorage(){
 			});
 			holder.appendChild(charBlock);
 		}
-	}
-	else{
-		saveBlock.style.display = 'none';
 	}
 }
 

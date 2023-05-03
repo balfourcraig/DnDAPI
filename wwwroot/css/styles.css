@@ -491,6 +491,10 @@ td {
 	border-radius: .5em;
 }
 
+.savedCharBlock .charName{
+	flex-grow: 1;
+}
+
 .savedCharBlock:hover {
 	background: #555;
 	cursor: pointer;
