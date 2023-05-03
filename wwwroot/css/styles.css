@@ -495,3 +495,55 @@ td {
 	background: #555;
 	cursor: pointer;
 }
+
+.msgBlock {
+	width: 100%;
+	height: 100%;
+	color: #fff;
+	font-family: monospace;
+	font-size: 1.2em;
+}
+.msgRow {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	margin: 0.5em 0;
+}
+.msgRow.user{
+	justify-content: flex-start;
+}
+.msgRow.user::after{
+	content: '';
+	min-width: 2em;
+}
+.msgRow.npc{
+	justify-content: flex-end;
+}
+.msgRow.npc::before{
+	content: '';
+	min-width: 2em;
+}
+.msg {
+	border: 1px solid #000000;
+	border-radius: 5px;
+	padding: 10px;
+	overflow: auto;
+	color: #e0e0e0;
+}
+.msg .msgHeader{
+	opacity: 0.5;
+	font-size: 0.75em;
+	width: 100%;
+}
+.npc .msg .msgHeader{
+	text-align: right;
+}
+.user .msg {
+	background-color: #004042;
+}
+.npc .msg {
+	background-color: #093a00;
+	
+}

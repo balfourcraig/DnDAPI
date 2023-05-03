@@ -72,7 +72,7 @@ function resetChat(){
 	const inputBox = document.getElementById('chatInputBox');
 	inputBox.value = '';
 	inputBox.disabled = false;
-	document.getElementById('messageHolder').innerHTML = '';
+	document.getElementById('msgBlock').innerHTML = '';
 }
 
 function sendChatMessage(){
@@ -86,11 +86,8 @@ function sendChatMessage(){
 			role: 'user',
 			content: msg
 		});
-		const msgBlock = document.createElement('div');
-		msgBlock.classList.add('chatMsg');
-		msgBlock.classList.add('userMsg');
-		msgBlock.innerHTML = msg;
-		document.getElementById('messageHolder').appendChild(msgBlock);
+		const msgRow = buildMessage(msg, 'user', 'You');
+		document.getElementById('msgBlock').appendChild(msgRow);
 		inputBox.value = 'Loading...';
 		inputBox.disabled = true;
 		const address = apiAddress + `/api/NPC/Chat`;
@@ -100,17 +97,14 @@ function sendChatMessage(){
 		};
 		makePostRequest(address, JSON.stringify(requestData), (data) => {
 			const response = JSON.parse(data);
-			const msgBlock = document.createElement('div');
-			msgBlock.classList.add('chatMsg');
-			msgBlock.classList.add('npcMsg');
-			msgBlock.innerHTML = '<span class="tag">' +  person.firstname + ': </span>' + response.content;
+			const msgRow = buildMessage(response.content, 'npc', person.firstname);
 			messages.push(
 				{
 					role: 'assistant',
 					content: response.content
 				}
 			);
-			document.getElementById('messageHolder').appendChild(msgBlock);
+			document.getElementById('msgBlock').appendChild(msgRow);
 			inputBox.value = '';
 			inputBox.disabled = false;
 			inputBox.focus();
@@ -320,6 +314,24 @@ function appendCharacter(c){
 }
 
 let lineUniquifier = 1;
+
+function buildMessage(contents, sender, label){
+	const row = document.createElement('div');
+	row.classList.add('msgRow');
+	row.classList.add(sender);
+	const msg = document.createElement('div');
+	msg.classList.add('msg');
+	const msgLabel = document.createElement('div');
+	msgLabel.classList.add('msgHeader');
+	msgLabel.innerText = label;
+	msg.appendChild(msgLabel);
+	const msgContent = document.createElement('div');
+	msgContent.classList.add('msgContent');
+	msgContent.innerText = contents;
+	msg.appendChild(msgContent);
+	row.appendChild(msg);
+	return row;
+}
 
 function buildRowBlock(content, name, randFunc, updateFunc){
 	const row = document.createElement('tr');
