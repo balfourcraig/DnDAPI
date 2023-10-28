@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-nz">
+    <head>
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
+        <meta charset="UTF-8" />
+        <title>NPC Builder - D&amp;D</title>
+        <link rel="stylesheet" href="../css/styles.css" />
+        <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" />
+
+        <script src="../scripts/utils.js"></script>
+        <script src="../scripts/nav.js"></script>
+
+        <script src="../scripts/jonquilChat.js"></script>
+    </head>
+    <body>
+        <div class="navHolder">
+            <nav id="nav" pagePrefix="../"></nav>
+        </div>
+
+        <main>
+            <div class="pageWidth">
+                <header>
+                    <h1>Jonquil Chat</h1>
+                </header>
+                <section id="chatArea">
+                    <div id="msgBlock"></div>
+                    <div id="chatInput">
+                        <div class="messageAvatar"></div>
+                        <input
+                            type="text"
+                            id="chatInputBox"
+                            placeholder="Type here..."
+                        />
+                        <button id="chatResetBtn" class="randBtn">
+                            &#x267A;
+                        </button>
+                        <button id="chatSendBtn" class="randBtn">
+                            &#x27A2;
+                        </button>
+                    </div>
+                </section>
+                <div class="scrollOverflow"></div>
+            </div>
+        </main>
+    </body>
+</html>
