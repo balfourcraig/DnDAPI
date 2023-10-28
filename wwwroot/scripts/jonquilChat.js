@@ -103,9 +103,8 @@ function buildMessage(contents, sender, label) {
         const img = document.getElementById("avatar");
         img.src = getImageForMessage(contents);
         contents = stripMoodFromMessage(contents);
-    } else {
-        msgContent.innerText = contents;
     }
+    msgContent.innerText = contents;
     msg.appendChild(msgContent);
     row.appendChild(msg);
     return row;
