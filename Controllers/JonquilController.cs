@@ -18,26 +18,13 @@ namespace DnDAPI.Controllers
         private IConfiguration _configuration;
         private static readonly Random r = new Random();
         private static readonly string[] messageMoods = new string[] { 
-            "Neutral",
-            "Happy",
-            "Angry",
-            "Confused",
-            "Thinking",
-            "Sad",
-            "Surprised",
-            "Laughing",
-            "Listening",
-            "Celebrating",
-            "Questioning",
-            "Thumbs up",
-            "Thumbs down",
-            "Waving",
-            "Sleeping",
-            "Energetic",
-            "Relaxed",
-            "Stressed",
-            "Concentrating",
-            "Excited"
+            "angry",
+            "happy",
+            "laughing",
+            "neutral",
+            "surprised",
+            "thinking",
+            "waving",
         };
 
         public JonquilController(ILogger<JonquilController> logger, IConfiguration configuration)
