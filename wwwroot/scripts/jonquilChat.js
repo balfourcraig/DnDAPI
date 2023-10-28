@@ -18,7 +18,7 @@ let messages = [];
 const moods = [
     { mood: "neutral", numImages: 6 },
     { mood: "angry", numImages: 2 },
-    { mood: "happy", numImages: 8 },
+    { mood: "happy", numImages: 7 },
     { mood: "laughing", numImages: 4 },
     { mood: "surprised", numImages: 2 },
     { mood: "thinking", numImages: 3 },
@@ -34,10 +34,11 @@ function getImageForMessage(msg) {
         const mood = match[1].toLowerCase();
         let moodInfo = moods.find((m) => m.mood === mood);
         if (!moodInfo) {
+            console.log(`Unknown mood: ${mood}. Using neutral instead.`);
             moodInfo = moods.find((m) => m.mood === "neutral");
         }
         const imageNum = Math.floor(Math.random() * moodInfo.numImages) + 1;
-        return imagePath + mood + imageNum + ".jpg";
+        return imagePath + moodInfo.mood + imageNum + ".jpg";
     }
 }
 
