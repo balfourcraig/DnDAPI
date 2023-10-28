@@ -35,7 +35,7 @@ namespace DnDAPI.Controllers{
         public string? Race { get; set; } = null;
         public string? Profession { get; set; } = null;
         public string? Location { get; set; } = null;
-        public Dictionary<string, string>? Extras { get; set; } = null;
+        public List<KeyValuePair<string, string>>? Extras { get; set; } = null;
     }
 
     public record NPCChatRequest(ChatMessage[] Messages, NPC Person);

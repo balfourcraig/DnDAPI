@@ -117,16 +117,17 @@ namespace DnDAPI.Controllers
             if(!string.IsNullOrWhiteSpace(person.Flavor))
                 prompt += $" a small detail about you is {person.Flavor}.";            
 
-            if(person.Extras != null && person.Extras.Count > 0){
-                foreach(KeyValuePair<string,string> e in person.Extras){
-                    prompt += $" your {e.Key} is {e.Value}.";
-                }
-            }
+            // if(person.Extras != null && person.Extras.Count > 0){
+            //     foreach(KeyValuePair<string,string> e in person.Extras){
+            //         prompt += $" your {e.Key} is {e.Value}.";
+            //     }
+            // }
 
             prompt += " The world setting is medieval fantasy.";
-            prompt += " You do not know things outside this setting, such as modern technology or pop culture references.";
+            prompt += " You do not know things outside this setting, such as modern technology or pop culture references and your moral code is based on this world.";
+            prompt += " This world is one of violence and death and you accept this as a fact of life. Violence can solve problems.";
             prompt += " You have your own goals and motivations, and you are not necessarily friendly or helpful to the player character.";
-            prompt += " You may be violent, rude, aggressive, or racist if it fits your character.";
+            prompt += " You may be violent, hostile, indifferent, rude, aggressive, or racist if it fits your character.";
             prompt += " Your answers should be short and to the point.";
             prompt += " You can do all things a normal person can do including all their senses.";
             prompt += " You are a person with opinions, and you must only answer as that person and never as an AI. You must never mention in your response that that you are a person or are answering as a person as it is assumed by default.";
