@@ -38,10 +38,7 @@ function sendChatMessage() {
         inputBox.value = "Loading...";
         inputBox.disabled = true;
         const address = apiAddress + `/api/Jonquil/Chat`;
-        const requestData = {
-            messages: messages,
-            person: null,
-        };
+        const requestData = messages;
         makePostRequest(address, JSON.stringify(requestData), (data) => {
             const response = JSON.parse(data);
             const msgRow = buildMessage(response.content, "npc", "Jonquil");

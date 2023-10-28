@@ -47,19 +47,21 @@ namespace DnDAPI.Controllers
         }
 
         [HttpPost(Name = "Post_JonquilChat")]
-        public async Task<IActionResult> Chat([FromBody] NPCChatRequest request)
+        public async Task<IActionResult> Chat([FromBody] List<ChatMessage> messages)
         {
+            if(messages == null)
+                return BadRequest("Invalid NPC object");
+                
             string? userKey = Request.Cookies["userKey"];
             string systemPrompt = GetNPCChatPrompt();
-            List<ChatMessage> messages = new List<ChatMessage>();
             messages.Add(new ChatMessage(Role: "system", Content: systemPrompt));
             int maxMessages = 15;
-            if(request.Messages != null && request.Messages.Length > 0){
-                int startIndex = request.Messages.Length - maxMessages;
+            if(messages != null && messages.Count > 0){
+                int startIndex = messages.Count - maxMessages;
                 if(startIndex < 0)
                     startIndex = 0;
-                for(int i = startIndex; i < request.Messages.Length; i++){
-                    messages.Add(request.Messages[i]);
+                for(int i = startIndex; i < messages.Count; i++){
+                    messages.Add(messages[i]);
                 }
             }
             else{
