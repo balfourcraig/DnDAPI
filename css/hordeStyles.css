@@ -1,0 +1,38 @@
+.crit{
+    color: rgb(255, 0, 234);
+}
+
+.dmg{
+    color: rgb(255, 0, 0);
+    font-weight: bold;
+}
+
+.dmg::after{
+    content: ' dmg';
+    color: rgb(255, 0, 0);
+    opacity: 0.8;
+    font-size: 0.8em;
+    font-weight: normal;
+}
+
+.miss{
+    opacity: 0.5;
+}
+
+.fail{
+    color: rgb(86, 249, 255);
+}
+
+.name{
+    font-weight: bold;
+}
+
+.hidden{
+    display: none;
+}
+
+.partyMember{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

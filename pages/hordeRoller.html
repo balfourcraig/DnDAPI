@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en-nz">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta charset="UTF-8">
+	<title>Horde Combat - D&amp;D</title>
+	<link rel="stylesheet" href="../css/styles.css">
+	<link rel="stylesheet" href="../css/hordeStyles.css">
+	<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" />
+	
+	<script src="../scripts/nav.js"></script>
+	<script src="../scripts/lists/themes.js"></script>
+	<script src="../scripts/utils.js"></script>
+    <script src="../scripts/diceRoller/lexer.js"></script>
+	<script src="../scripts/diceRoller/ast.js"></script>
+	<script src="../scripts/diceRoller/parser.js"></script>
+    <script src="../scripts/diceRoller/types.js"></script>
+    <script src="../scripts/diceRoller/builder.js"></script>
+	<script src="../scripts/hordeRoller.js"></script>
+</head>
+<body>
+<div class="navHolder">
+	<nav id="nav" pagePrefix="../"></nav>
+</div>
+
+<main>
+	<div class="pageWidth">
+		<header>
+			<h1 id="pageHeader">Horde Combat</h1>
+		</header>
+		<section>
+            <h2>The Horde</h2>
+			<div>
+                <input id="damageDiceString" type="text" value="1d4">
+                <label>Damage dice per monster hit</label>
+            </div>
+            <div>
+                <input id="hitsPerMonsterInput" type="number" value="1" min="1">
+                <label>Number of attacks per monster</label>
+            </div>
+            <div>
+                <input id="numMonstersInput" type="number" min="1" value="1">
+                <label>Number of monsters</label>
+            </div>
+            <div>
+                <input id="toHitInput" type="number" value="0">
+                <label>To hit bonus</label>
+            </div>
+            <div>
+                <input id="autoCritHit" type="checkbox">
+                <label for="autoCritHit">Auto hit on 20 and miss on 1</label>
+            </div>
+            <div>
+                <select id="damageRoundingSelect">
+                    <option value="up">Up</option>
+                    <option value="down" selected>Down</option>
+                    <option value="none">No Rounding</option>
+                </select>
+                <label>Damage rounding</label>
+            </div>
+		</section>
+        <hr>
+        <section>
+            <h2>The Party</h2>
+            <div id="partyMembersHolder">
+                
+            </div>
+            <button id="addMemberBtn">Add member</button>
+        </section>
+        <hr>
+        <button id="rollBtn">ROLL</button>
+        <hr>
+        <div id="resultsArea" class="hidden">
+            <section>
+                <h2>Blow-by-blow</h2>
+                <ul id="blowByBlowHolder">
+                </ul>
+            </section>
+            <section>
+                <h2>Summary</h2>
+                <div >
+                    <ul id="resultsHolder">
+                    </ul>
+                </div>
+            </section>
+            <hr>
+            <button id="clearBtn" class="delBtn">Clear</button>
+        </div>
+		<div class="scrollOverflow"></div>
+	</div>
+</main>
+</body>
+</html>
